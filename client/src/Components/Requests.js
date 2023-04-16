@@ -1,13 +1,14 @@
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
-function Requests() {
-    const {groupId} = useParams()
+function Requests({groupID}) {
+    // const {groupId} = useParams()
     const [requests, setRequests] = useState([])
     
     useEffect(() => {
-        fetch(`/groups/${groupId}/requests`).then(res => res.json()).then(data => setRequests(data))
-    }, [groupId])
+        if (groupID)
+        fetch(`/groups/${groupID}/requests`).then(res => res.json()).then(data => setRequests(data))
+    }, [groupID])
     const renderRequests = requests.map((request) => {
         return (
             <div key={request.id} >

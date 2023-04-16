@@ -15,6 +15,8 @@ with app.app_context():
     groups.append(g2)
     g3 = Group(user_id=2, name='group 3')
     groups.append(g3)
+    g4 = Group(user_id=1, name='group 4')
+    groups.append(g4)
     db.session.add_all(groups)
 
     groupusers = []
@@ -26,6 +28,8 @@ with app.app_context():
     groupusers.append(gu3)
     gu4 = GroupUser(user_id=2, group_id=3)
     groupusers.append(gu4)
+    gu5 = GroupUser(user_id=1, group_id=4)
+    groupusers.append(gu5)
     db.session.add_all(groupusers)
 
     requests = []

@@ -1,36 +1,33 @@
 import { useEffect, useState } from 'react'
 import { Link, Route } from 'react-router-dom'
 import Requests from './Requests'
+import Users from './Users'
 
 function Groups({groups, fetchGroups, user}){
     useEffect(() => {fetchGroups()}, [])
     const [groupID, setGroupID] = useState(null)
-    console.log(groupID)
-    // console.log(groups)
-    const mappedGroups = groups.map(group => group.groupuser).flat()
-    // console.log(mappedGroups)
-    const filteredGroups = mappedGroups.filter(filteredGroup => filteredGroup.group_id === 1)
-    console.log(filteredGroups)
-    const users = filteredGroups.map(group => group.users)
-    console.log(users)
-    // function setID(id) {
-    //     // setGroupID(id)
-    // console.log(id)
-    // }
+    const [showUsers, setShowUsers] = useState(null)
+    const [initial, setInitial] = useState(true)
+    function handleClick() {
+        fetchGroups()
+        setShowUsers((toggle) => !toggle)
+    }
+    const users = groups.map(mappedGroups => mappedGroups.groupuser).flat().filter(filteredGroups => filteredGroups.group_id === groupID).map(group => group.users)
+    const buttonText = showUsers ? <button onClick={handleClick} > Show Requests </button> : <button onClick={handleClick} > Show Users </button>
+    const initalButtonText = !initial ? buttonText : null
+    const renderInfo = showUsers ? <Users users={users} /> : <Requests groupID={groupID} /> 
+    const initialRenderInfo = !initial ? renderInfo : null
 
     const renderGroups = groups.map(mappedGroups => mappedGroups.groupuser).flat().filter(filteredGroups => filteredGroups.user_id === user.id).map(group => {
-        // console.log(group.groups.id)
+
         return (
             <div key={group.groups.id} >
             <ul className='groupcard' >
-                <li >
-                {/* <Link to={`/groups/${group.groups.id}/requests`}> {group.groups.name} </Link> */}
-                {/* <Link to={`/groups/${group.groups.id}/requests`} onClick={() => setID(group.groups.id)} > {group.groups.name} </Link> */}
-                <Link to={`/groups/${group.groups.id}/requests`} onClick={() => setGroupID(group.groups.id)} > {group.groups.name} </Link>
-                </li>
-                <li >
-                {users[0].name}
-                </li>
+                <button onClick={() => {setGroupID(group.groups.id); setInitial(false)}} > {group.groups.name} </button>
+                {/* <div>
+                {group.groups.name} 
+                </div>
+                <button onClick={() => {setGroupID(group.groups.id); handleClick()}} > {buttonText} </button> */}
             </ul>
             </div>
             )
@@ -40,13 +37,9 @@ function Groups({groups, fetchGroups, user}){
         <div>
             <h1>Groups</h1>
             <Link to={`/editgroups`}> Edit Groups </Link>
+            {initalButtonText}
             <div className='groupscontainer'> {renderGroups} </div>
-            <Route path={`/groups/:groupId/requests`}>
-                <Requests />
-            </Route>
-            {/* <Route
-            <Users/>
-            <Route */}
+            {initialRenderInfo}
         </div>
     )
 }
