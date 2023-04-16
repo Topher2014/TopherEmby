@@ -3,9 +3,10 @@ from models import db, User, Group, GroupUser, Request
 
 with app.app_context():
     
-    User.query.delete()
+    # User.query.delete()
     Group.query.delete()
     GroupUser.query.delete()
+    Request.query.delete()
 
     groups = []
     g1 = Group(user_id=1, name='group 1')
@@ -15,15 +16,17 @@ with app.app_context():
     g3 = Group(user_id=2, name='group 3')
     groups.append(g3)
     db.session.add_all(groups)
-    db.session.commit()
 
     groupusers = []
     gu1 = GroupUser(user_id=1, group_id=1)
     groupusers.append(gu1)
-    gu2 = GroupUser(user_id=2, group_id=1)
+    gu2 = GroupUser(user_id=1, group_id=2)
     groupusers.append(gu2)
+    gu3 = GroupUser(user_id=2, group_id=1)
+    groupusers.append(gu3)
+    gu4 = GroupUser(user_id=2, group_id=3)
+    groupusers.append(gu4)
     db.session.add_all(groupusers)
-    db.session.commit()
 
     requests = []
     r1 = Request(user_id=1, group_id=1, type='Movie', name='Annihilation', quality='1080')
@@ -37,4 +40,5 @@ with app.app_context():
     r5 = Request(user_id=2, group_id=2, type='Show', name='Succession', quality='1080')
     requests.append(r5)
     db.session.add_all(requests)
+
     db.session.commit()

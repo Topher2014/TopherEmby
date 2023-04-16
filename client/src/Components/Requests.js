@@ -8,14 +8,11 @@ function Requests() {
     useEffect(() => {
         fetch(`/groups/${groupId}/requests`).then(res => res.json()).then(data => setRequests(data))
     }, [groupId])
-    // Ask Emiley
-    console.log(requests)
     const renderRequests = requests.map((request) => {
-            console.log(request)
         return (
-            <div>
-                <ul className='requestcard' key={request.id}>
-                    <li key={request.id}>
+            <div key={request.id} >
+                <ul className='requestcard' >
+                    <li>
                         <h4> {request.type} {request.name} {request.quality} </h4>
                     </li>
                 </ul>

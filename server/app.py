@@ -10,15 +10,6 @@ def index():
 
 api = Api(app)
 
-# class Index(Resource):
-#     def get(self):
-#         response = make_response(
-#             {'message': 'blah blah blah'},
-#             200
-#         )
-#         return response
-# api.add_resource(Index, '/')
-
 class Users(Resource):
     def get(self):
         users_list = [u.to_dict() for u in User.query.all()]
@@ -31,7 +22,8 @@ api.add_resource(Users, '/users')
 
 class Groups(Resource):
     def get(self):
-        groups_list = [g.to_dict() for g in Group.query.filter_by(user_id=session['user_id'])]
+        # groups_list = [g.to_dict() for g in Group.query.filter_by(user_id=session['user_id'])]
+        groups_list = [g.to_dict() for g in Group.query.all()]
         response = make_response(
             groups_list,
              200
@@ -80,6 +72,19 @@ class GroupUsers(Resource):
         response = make_response(
             groupusers_list,
             200
+        )
+        return response
+    def post(self):
+        data = request.get_json()
+        new_request = GroupUser(
+            group_id = data['group_id'],
+            user_id = data['user_id']
+        )
+        db.session.add(new_request)
+        db.session.commit()
+        response = make_response(
+            new_request.to_dict(),
+            201
         )
         return response
 api.add_resource(GroupUsers, '/groupusers') 
@@ -134,6 +139,26 @@ class AuthorizedSession(Resource):
             abort(401, 'Unauthorized')
 api.add_resource(AuthorizedSession, '/authorized')
 
+class Requests(Resource):
+    def post(self):
+        data = request.get_json()
+        new_request = Request(
+            name = data['name'],
+            type = data['type'],
+            quality = data['quality'],
+            group_id = data['group_id'],
+            user_id = session['user_id']
+        )
+        db.session.add(new_request)
+        db.session.commit()
+        response = make_response(
+            new_request.to_dict(),
+            201
+        )
+        return response
+api.add_resource(Requests, '/addrequest')
+    
+
 class RequestsByID(Resource):
     def get(self, id):
         requests = [r.to_dict() for r in Request.query.filter_by(group_id=id)]
@@ -144,7 +169,6 @@ class RequestsByID(Resource):
         )
         return response
 api.add_resource(RequestsByID, '/groups/<int:id>/requests')
-
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -17,10 +17,9 @@ function Nav({updateUser}) {
     return (
         <nav className = 'navigation'>
             <NavLink className='brand-name' exact to='/'>
-                <strong> Topherrr Emby </strong>
+                <strong> Topher Emby </strong>
             </NavLink>
             <ul>
-                {/* <li> <NavLink exact to='/authentication'> Log In/Signup </NavLink> </li> */}
                 <li onClick={handleLogout}> <NavLink exact to='/logout'> Logout </NavLink> </li>
                 <li> <NavLink exact to='/groups'> Groups </NavLink> </li>
                 <li> <NavLink to='/addrequest'> Add Request </NavLink> </li>

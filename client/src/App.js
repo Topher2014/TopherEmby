@@ -6,6 +6,7 @@ import { Switch, Route } from 'react-router-dom'
 import Groups from './Components/Groups'
 import EditGroups from './Components/EditGroups'
 import AddRequest from './Components/AddRequest'
+import AddUsers from './Components/AddUsers'
 
 function App() {
     const [user, setUser] = useState(null)
@@ -30,29 +31,32 @@ function App() {
     if(!user) return (
     <>
         <Nav/>
-        <Authentication updateUser={updateUser}/>
+        <Authentication updateUser={updateUser} />
     </>
     )
 
     return (
-    <div className='App'>
-        <div className='container'>
-        <Nav updateUser={updateUser}/>
+    <div className='App' >
+        <div className='container' >
+        <Nav updateUser={updateUser} />
         <Switch>
-            <Route exact path='/'>
+            <Route exact path='/' >
                 <Home />
             </Route>
             <Route path='authentication'>
-                <Authentication updateUser={updateUser}/>
+                <Authentication updateUser={updateUser} />
             </Route>
             <Route path='/groups'>
-                <Groups groups={groups} fetchGroups={fetchGroups}/>
+                <Groups groups={groups} fetchGroups={fetchGroups} user={user} />
             </Route>
-            <Route exact path={`/editgroups`}>
-                <EditGroups groups={groups} fetchGroups={fetchGroups} setGroups={setGroups}/>
+            <Route exact path={`/editgroups`} >
+                <EditGroups groups={groups} fetchGroups={fetchGroups} setGroups={setGroups} />
             </Route>
-            <Route path={`/addrequest`}>
-                <AddRequest groups={groups} fetchGroups={fetchGroups}/>
+            <Route path={`/addrequest`} >
+                <AddRequest groups={groups} fetchGroups={fetchGroups} />
+            </Route>
+            <Route path={`/addusers/:groupId`} >
+                <AddUsers />
             </Route>
         </Switch>
         </div>

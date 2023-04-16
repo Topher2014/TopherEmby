@@ -33,7 +33,7 @@ class Group(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     name = db.Column(db.String)
 
-    groupuser = db.relationship('GroupUser', back_populates='groups')
+    groupuser = db.relationship('GroupUser', back_populates='groups', cascade='all, delete, delete-orphan')
 
 class GroupUser(db.Model, SerializerMixin):
     __tablename__ = 'groupusers'
@@ -50,6 +50,6 @@ class Request(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer)
     group_id = db.Column(db.Integer)
-    type = db.Column(db.String)
     name = db.Column(db.String)
+    type = db.Column(db.String)
     quality = db.Column(db.String)
