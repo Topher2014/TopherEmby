@@ -43,3 +43,4 @@ https://github.com/BrettdeBear/SENG-LIVE-Phase-4-flask-010923/blob/main/06-Auth-
 
 // window.location.reload()
 const mappedUsers = groups.map(group => group.groupuser.map(groupuser => groupuser.users))
+//
