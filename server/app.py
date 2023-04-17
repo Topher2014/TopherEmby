@@ -147,7 +147,8 @@ class Requests(Resource):
             type = data['type'],
             quality = data['quality'],
             group_id = data['group_id'],
-            user_id = session['user_id']
+            user_id = session['user_id'],
+            imdb_id = data['imdb_id']
         )
         db.session.add(new_request)
         db.session.commit()

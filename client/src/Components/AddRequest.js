@@ -14,13 +14,12 @@ function AddRequest({groups, fetchGroups, user}) {
         setShowManual(toggle => !toggle)
     }
     const buttonText = showManual ? <button onClick={handleClick} > Search </button> : <button onClick={handleClick} > Don't see what you're looking for? Enter it manually! </button> 
-    const requestMethod = showManual ? <EnterManually groupOptions={groupOptions} /> : <Search groupOptions={groupOptions} /> 
+    const requestMethod = showManual ? <EnterManually buttonText={buttonText} groupOptions={groupOptions} /> : <Search buttonText={buttonText} groupOptions={groupOptions} /> 
     return (
         <div>
             <h1> Add Request </h1>
             {requestMethod}
             <br></br>
-            {buttonText}
         </div>
     )
 }

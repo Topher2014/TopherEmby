@@ -1,13 +1,14 @@
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 
-function EnterManually({groupOptions}) {
+function EnterManually({buttonText, groupOptions}) {
     const formSchema = yup.object().shape({
             name: yup.string().required('Enter a name, dummy!'),
             type: yup.string().required('You really should add a type, dummy!'),
-            quality: yup.string().required('You really should add a quality, dummy!')
+            quality: yup.string().required('You really should add a quality, dummy!'),
+            group_id: yup.number().required('Choose a group, dummy!')
         })
-    const formik = useFormik({
+    const form = useFormik({
         initialValues: {
             name: '',
             type: '',
@@ -34,31 +35,35 @@ function EnterManually({groupOptions}) {
     return (
         <div>
             {/* <h1> Add Request </h1> */}
-            <h2 style={{color:'red'}}> {formik.errors.name} </h2>
-            <h2 style={{color:'red'}}> {formik.errors.type} </h2>
-            <h2 style={{color:'red'}}> {formik.errors.quality} </h2>
-            <form className='requestform' onSubmit={formik.handleSubmit} >
+            <h2 style={{color:'red'}}> {form.errors.name} </h2>
+            <h2 style={{color:'red'}}> {form.errors.type} </h2>
+            <h2 style={{color:'red'}}> {form.errors.quality} </h2>
+            <h2 style={{color:'red'}}> {form.errors.group_id} </h2>
+            <form className='requestform' onSubmit={form.handleSubmit} >
                 <label> Name: </label>
-                <textarea type='text' name='name' value={formik.values.name} onChange={formik.handleChange} />
+                <input type='text' name='name' value={form.values.name} onChange={form.handleChange} />
                 <label> Type: </label>
-                <select name='type' value={formik.values.type} onChange={formik.handleChange} >
+                <select name='type' value={form.values.type} onChange={form.handleChange} >
                     <option value='' >  </option>
-                    <option value='Movie' > Movie </option>
-                    <option value='Show' > Show </option>
+                    <option value='movie' > Movie </option>
+                    <option value='tv' > Show </option>
                 </select>
                 <label> Quality: </label>
-                <select name='quality' value={formik.values.quality} onChange={formik.handleChange} >
+                <select name='quality' value={form.values.quality} onChange={form.handleChange} >
                     <option value='' >  </option>
                     <option value='720p' > 720p </option>
                     <option value='1080p' > 1080p </option>
                     <option value='4k' > 4k </option>
                 </select>
                 <label> Group: </label>
-                <select name='group_id' value={formik.values.group_id} onChange={formik.handleChange} >
+                <select name='group_id' value={form.values.group_id} onChange={form.handleChange} >
+                    <option value='' >  </option>
                     {groupOptions}
                 </select>
                 <input className='button-30' type='submit' />
             </form>
+            <br></br>
+            {buttonText}
         </div>
     )
 }

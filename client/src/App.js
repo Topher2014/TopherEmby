@@ -64,9 +64,9 @@ function App() {
             <Route path={`/addusers/:groupId`} >
                 <AddUsers users={users} fetchUsers={fetchUsers} />
             </Route>
-            <Route path={`/search`} >
+            {/* <Route path={`/search`} >
                 <Search />
-            </Route>
+            </Route> */}
             <Route path={`/users`}>
                 <Users users={users} fetchUsers={fetchUsers} />
             </Route>
