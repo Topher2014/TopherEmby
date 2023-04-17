@@ -8,6 +8,13 @@ with app.app_context():
     GroupUser.query.delete()
     Request.query.delete()
 
+    users = []
+    u1 = User(name='Sam')
+    users.append(u1)
+    u2 = User(name='Nick')
+    users.append(u2)
+    db.session.add_all(users)
+
     groups = []
     g1 = Group(user_id=1, name='group 1')
     groups.append(g1)

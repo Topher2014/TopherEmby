@@ -7,13 +7,19 @@ import Groups from './Components/Groups'
 import EditGroups from './Components/EditGroups'
 import AddRequest from './Components/AddRequest'
 import AddUsers from './Components/AddUsers'
+import Users from './Components/Users'
+import Search from './Components/Search'
 
 function App() {
     const [user, setUser] = useState(null)
     const [groups, setGroups] = useState([])
+    const [users, setUsers] = useState([])
 
     const fetchGroups = () => (
         fetch('/groups').then(res => res.json()).then(data => setGroups(data))
+    )
+    const fetchUsers = () => (
+        fetch('/users').then(res => res.json()).then(data => setUsers(data))
     )
 
     useEffect(() => {
@@ -49,14 +55,20 @@ function App() {
             <Route path='/groups'>
                 <Groups groups={groups} fetchGroups={fetchGroups} user={user} />
             </Route>
-            <Route exact path={`/editgroups`} >
-                <EditGroups groups={groups} fetchGroups={fetchGroups} setGroups={setGroups} />
+            <Route path={`/editgroups`} >
+                <EditGroups groups={groups} fetchGroups={fetchGroups} setGroups={setGroups} user={user} />
             </Route>
             <Route path={`/addrequest`} >
-                <AddRequest groups={groups} fetchGroups={fetchGroups} />
+                <AddRequest groups={groups} fetchGroups={fetchGroups} user={user} />
             </Route>
             <Route path={`/addusers/:groupId`} >
-                <AddUsers />
+                <AddUsers users={users} fetchUsers={fetchUsers} />
+            </Route>
+            <Route path={`/search`} >
+                <Search />
+            </Route>
+            <Route path={`/users`}>
+                <Users users={users} fetchUsers={fetchUsers} />
             </Route>
         </Switch>
         </div>

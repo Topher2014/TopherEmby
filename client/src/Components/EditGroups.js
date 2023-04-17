@@ -3,7 +3,7 @@ import { useEffect, React } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 
-function EditGroups({groups, fetchGroups, setGroups}) {
+function EditGroups({groups, fetchGroups, setGroups, user}) {
     useEffect(() => {fetchGroups()}, [])
     const history = useHistory()
     const formSchema = yup.object().shape({
@@ -44,21 +44,21 @@ function EditGroups({groups, fetchGroups, setGroups}) {
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify({user_id: data.user_id, group_id: data.id}),
-                        }).then(res => res.json()).then(data => console.log(data))
+                        })
                     })
                 }
             })
         }
     })
 
-    console.log(groups)
-    const renderGroups = groups.map((group) => {
+    const renderGroups = groups.map(mappedGroups => mappedGroups.groupuser).flat().filter(filteredGroups => filteredGroups.user_id === user.id).map(group => {
+        console.log(group)
         return (
-            <div key={group.id} >
+            <div key={group.groups.id} >
             <ul className='groupcard' >
-                <li > {group.name} </li>
-                <button className='button-30' onClick={() => handleDelete(group.id)} > Delete </button>
-                <Link to={`/addusers/${group.id}`} > Add Users </Link>
+                <li > {group.groups.name} </li>
+                <button className='button-30' onClick={() => handleDelete(group.groups.id)} > Delete </button>
+                <Link to={`/addusers/${group.groups.id}`} > Add Users </Link>
             </ul>
             </div>
             )

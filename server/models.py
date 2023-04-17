@@ -28,7 +28,7 @@ class User(db.Model, SerializerMixin):
 
 class Group(db.Model, SerializerMixin):
     __tablename__ = 'groups'
-    serialize_rules = ()
+    # serialize_rules = ('-groupuser.users',)
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     name = db.Column(db.String)

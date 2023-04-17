@@ -23,6 +23,8 @@ function Nav({updateUser}) {
                 <li onClick={handleLogout}> <NavLink exact to='/logout'> Logout </NavLink> </li>
                 <li> <NavLink exact to='/groups'> Groups </NavLink> </li>
                 <li> <NavLink to='/addrequest'> Add Request </NavLink> </li>
+                {/* <li> <NavLink to='/search'> Search </NavLink> </li> */}
+                <li> <NavLink to='/users'> Users </NavLink> </li>
             </ul>
         </nav>
     )

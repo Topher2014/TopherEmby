@@ -1,8 +1,6 @@
-import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 function Requests({groupID}) {
-    // const {groupId} = useParams()
     const [requests, setRequests] = useState([])
     
     useEffect(() => {
