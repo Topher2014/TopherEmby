@@ -53,3 +53,4 @@ class Request(db.Model, SerializerMixin):
     name = db.Column(db.String)
     type = db.Column(db.String)
     quality = db.Column(db.String)
+    imdb_id = db.Column(db.Integer)

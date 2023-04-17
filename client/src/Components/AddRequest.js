@@ -4,11 +4,23 @@ import Search from "./Search"
 
 function AddRequest({groups, fetchGroups, user}) {
     const [showManual, setShowManual] = useState(false)
-    const requestMethod = showManual ? <EnterManually groups={groups} fetchGroups={fetchGroups} user={user} /> : <Search /> 
+    useEffect(() => {fetchGroups()}, [])
+    const groupOptions = groups.map(mappedGroups => mappedGroups.groupuser).flat().filter(filteredGroups => filteredGroups.user_id === user.id).map(group => {
+        return (
+            <option value={group.groups.id} key={group.groups.id} > {group.groups.name} </option>
+        )
+    })
+    function handleClick() {
+        setShowManual(toggle => !toggle)
+    }
+    const buttonText = showManual ? <button onClick={handleClick} > Search </button> : <button onClick={handleClick} > Don't see what you're looking for? Enter it manually! </button> 
+    const requestMethod = showManual ? <EnterManually groupOptions={groupOptions} /> : <Search groupOptions={groupOptions} /> 
     return (
         <div>
             <h1> Add Request </h1>
             {requestMethod}
+            <br></br>
+            {buttonText}
         </div>
     )
 }

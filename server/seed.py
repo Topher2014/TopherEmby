@@ -40,15 +40,15 @@ with app.app_context():
     db.session.add_all(groupusers)
 
     requests = []
-    r1 = Request(user_id=1, group_id=1, type='Movie', name='Annihilation', quality='1080')
+    r1 = Request(user_id=1, group_id=1, type='Movie', name='Annihilation', quality='1080', imdb_id=300668 )
     requests.append(r1)
-    r2 = Request(user_id=1, group_id=1, type='Movie', name='Avengers', quality='4k')
+    r2 = Request(user_id=1, group_id=1, type='Movie', name='Avengers', quality='4k', imdb_id=24428 )
     requests.append(r2)
-    r3 = Request(user_id=1, group_id=2, type='Show', name='Veep', quality='1080')
+    r3 = Request(user_id=1, group_id=2, type='Show', name='Veep', quality='1080', imdb_id=2947 )
     requests.append(r3)
-    r4 = Request(user_id=2, group_id=3, type='Show', name='Mandalorian', quality='1080')
+    r4 = Request(user_id=2, group_id=3, type='Show', name='Mandalorian', quality='1080', imdb_id=82856 )
     requests.append(r4)
-    r5 = Request(user_id=2, group_id=2, type='Show', name='Succession', quality='1080')
+    r5 = Request(user_id=2, group_id=2, type='Show', name='Succession', quality='1080', imdb_id=76331 )
     requests.append(r5)
     db.session.add_all(requests)
 
