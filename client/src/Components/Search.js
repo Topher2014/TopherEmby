@@ -4,12 +4,11 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 
 function Search({buttonText, groupOptions}) {
-  const [renderCards, setRenderCards] = useState([]);
   const initialValue = '-----------------'
   const [selectedProgram, setSelectedProgram] = useState(initialValue);
   const [type, setType] = useState('')
   const [imdb_id, setImdb_id] = useState('')
-  const [selectedID, setSelectedID] = useState('')
+  const [retrievedData, setRetrievedData] = useState([])
 
   const formSchema = yup.object().shape({
           name: yup.string().required('Enter a name, dummy!'),
@@ -34,7 +33,7 @@ function Search({buttonText, groupOptions}) {
               headers: {
                   'Content-Type': 'application/json',
               },
-              body: JSON.stringify({...values/* , name: selectedProgram, imdb_id: imdb_id */}),
+              body: JSON.stringify({...values}),
           }).then((response) => {
               if(response.ok) {
                       resetForm({ values: ''})
@@ -68,31 +67,25 @@ function Search({buttonText, groupOptions}) {
       `https://api.themoviedb.org/3/search/${e.type}?api_key=a09c757d39c1b519b0f90f145b75e716&query=${e.searchterm}`
     )
       .then((res) => res.json())
-      .then((data) => createProgramCards(data))
+      .then((data) => setRetrievedData(data))
   }
 
   function handleClick(program) {
-    console.log(program)
     program.title ? setSelectedProgram(program.title) : setSelectedProgram(program.name) 
     setImdb_id(program.id)
-    setSelectedID(program.id)
     return (
       null
     )
   }
-  console.log(imdb_id)
-  console.log(selectedID)
 
-  function createProgramCards(programs) {
-  const programCards = programs.results.map(program => {
-    // console.log(program.id)
-  console.log(selectedID === program.id)
-  
+  let programCards
+  if (retrievedData.results) {
+    programCards = retrievedData.results.map(program => {
     return (
       <div key={program.id} >
         <ul className='searchcard' >
           <li>
-            <h4> {program.title} <button onClick={() => handleClick(program)} > {selectedID === program.id ? 'Selected' : 'Select'} </button> </h4> 
+            <h4> {program.title} <button onClick={() => handleClick(program)} > {imdb_id === program.id ? 'Selected' : 'Select'} </button> </h4> 
           </li>
           <li>
             <h4> {program.overview} </h4>
@@ -102,11 +95,8 @@ function Search({buttonText, groupOptions}) {
         </ul>
       </div>
 
-    )
-  })
-  // setRenderCards(programCards)
-  return programCards
-  }
+      )}
+  )}
 
   return (
     <div>
@@ -149,8 +139,7 @@ function Search({buttonText, groupOptions}) {
       </form>
       <br></br>
       {buttonText}
-      {/* {renderCards} */}
-      {createProgramCards}
+      {programCards}
     </div>
   );
 }

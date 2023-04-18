@@ -2,38 +2,18 @@ import { useEffect, useState } from 'react'
 
 function Friends({user, users, fetchUsers}) {
     useEffect(() => {fetchUsers()}, [])
+    const [filteredUsers, setFilteredUsers] = useState([])
+    // setFilteredUsers(users)
 
-    // {id} = useParams()
-    const currentUserID = user.id
-    const thisUser = user ? user.id === parseInt(user.id) : false
-    console.log(user)
-    const friendIDs = user.friends.map(friend => friend.id)
-    console.log(friendIDs)
-    console.log(users)
-    const userIDs = users.map(user => user.id)
-    console.log(userIDs)
-
-    // let isFriend = false
-    if (user) {
-        // const friendIDs = users.map(user => user.friends).map(friend => console.log(friend))
-        // const friendIDs = users.map(user => user.map(friends => console.log(friends)))
-    }
-    // if (user) {
-    //     const friendIDs = user.friends.map(friend => friend.id)
-    //     isFriend = thisUser ? false : friendIDs.includes(parseInt(user.id))
-    //     // isFriend = thisUser ? false : friendIDs.includes(parseInt(id))
-    // }
-
-    function handleAddFriendClick() {
+    function handleAddFriendClick(friend_id) {
         fetch('/friendships', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                // user_id: parseInt(id),
                 user_id: parseInt(user.id),
-                friend_id: parseInt(user.id)
+                friend_id: parseInt(friend_id)
             })
         })
         .then(res => {
@@ -44,7 +24,7 @@ function Friends({user, users, fetchUsers}) {
         })
     }
 
-    function handleDeleteFriendClick() {
+    function handleDeleteFriendClick(friend_id) {
         fetch('/friendships', {
             method: 'DELETE',
             headers: {
@@ -52,14 +32,29 @@ function Friends({user, users, fetchUsers}) {
             },
             body: JSON.stringify({
                 user_id: parseInt(user.id),
-                friend_id: parseInt(user.id)
-                // friend_id: parseInt(id)
+                friend_id: parseInt(friend_id)
             })
         })
         .catch(err => console.log(err))
         window.location.reload(true)
+        // setFilteredUsers(users)
     }
+
+    console.log(users)
+    const handleChange = (event) => {
+        const search = event.target.value.toLowerCase()
+        setFilteredUsers(users.filter(user => {
+            const usernameBool = user.name.toLowerCase().includes(search)
+            // const emailBool = user.email.toLowerCase().includes(search)
+            // return usernameBool || emailBool
+            return usernameBool 
+        }))
+    }
+
+    const currentUserID = user.id
+    const friendIDs = user.friends.map(friend => friend.id)
     const renderUsers = users.map(user => {
+    // const renderUsers = filteredUsers.map(user => {
         const isFriend = friendIDs.includes(user.id)
         if (user.id === currentUserID){
             return ''
@@ -67,13 +62,14 @@ function Friends({user, users, fetchUsers}) {
         return (
         <div>
             {user.name}
-            {isFriend ? <button onClick={handleDeleteFriendClick}> Delete Friend </button> : <button onClick={handleAddFriendClick}> Add Friend </button>}
+            {isFriend ? <button onClick={() => handleDeleteFriendClick(user.id)}> Delete Friend </button> : <button onClick={() => handleAddFriendClick(user.id)}> Add Friend </button>}
         </div>
         )
     })
-    // console.log(user)
+
     return (
         <div>
+            <input onChange={(event) => handleChange(event)}/>  
             <h1> Users </h1>
             {renderUsers}
         </div>

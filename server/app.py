@@ -1,7 +1,7 @@
 from flask import Flask, make_response, request, session, abort, jsonify
 from flask_restful import Api, Resource
 from config import db, app, Api
-from models import User, Group, GroupUser, Request
+from models import User, Group, GroupUser, Request, Friendship
 from werkzeug.exceptions import NotFound, Unauthorized
 
 @app.route('/')
@@ -188,7 +188,7 @@ class Friendships(Resource):
         data = request.get_json()
         friendship = Friendship(
             user_id = data['user_id'],
-            friend_id = data['user_id']
+            friend_id = data['friend_id']
         )
         friendship_reverse = Friendship(
             user_id = data['friend_id'],
@@ -210,7 +210,7 @@ class Friendships(Resource):
             friend_id = data['user_id']
         ).first()
         db.session.delete(friendship)
-        db.session.delete(flask_restful)
+        db.session.delete(friendship_reverse)
         db.session.commit()
         return make_response('', 204)
 api.add_resource(Friendships, '/friendships')

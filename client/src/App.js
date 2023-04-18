@@ -63,7 +63,7 @@ function App() {
                 <AddRequest groups={groups} fetchGroups={fetchGroups} user={user} />
             </Route>
             <Route path={`/addusers/:groupId`} >
-                <AddUsers users={users} fetchUsers={fetchUsers} />
+                <AddUsers users={users} fetchUsers={fetchUsers} user={user} groups={groups} fetchGroups={fetchGroups} />
             </Route>
             <Route path={`/friends`} >
                 <Friends user={user} users={users} fetchUsers={fetchUsers} />
