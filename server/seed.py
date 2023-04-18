@@ -1,18 +1,26 @@
 from app import app
-from models import db, User, Group, GroupUser, Request
+from models import db, User, Group, GroupUser, Request, Friendship
 
 with app.app_context():
     
-    # User.query.delete()
+    User.query.delete()
     Group.query.delete()
     GroupUser.query.delete()
     Request.query.delete()
+    Friendship.query.delete()
 
     users = []
+    u0 = User(name='topher', email='blah@gmail.com')
+    u0.password_hash='1'
+    users.append(u0)
     u1 = User(name='Sam')
     users.append(u1)
     u2 = User(name='Nick')
     users.append(u2)
+    u3 = User(name='Billy')
+    users.append(u3)
+    u4 = User(name='Kyle')
+    users.append(u4)
     db.session.add_all(users)
 
     groups = []
@@ -51,5 +59,22 @@ with app.app_context():
     r5 = Request(user_id=2, group_id=2, type='Show', name='Succession', quality='1080', imdb_id=76331 )
     requests.append(r5)
     db.session.add_all(requests)
+
+    print('Creating shitty friendships...')
+    friendships = [
+        Friendship(user_id=1, friend_id=2),
+        Friendship(user_id=2, friend_id=1),
+
+        Friendship(user_id=1, friend_id=3),
+        Friendship(user_id=3, friend_id=1),
+
+        Friendship(user_id=1, friend_id=4),
+        Friendship(user_id=4, friend_id=1),
+
+        # Friendship(user_id=1, friend_id=5),
+        # Friendship(user_id=5, friend_id=1)
+
+    ]
+    db.session.add_all(friendships)
 
     db.session.commit()

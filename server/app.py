@@ -108,14 +108,20 @@ class Login(Resource):
     def post(self):
         try: 
             user = User.query.filter_by(name=request.get_json()['name']).first()
+            # print(user)
+            # print(user.name)
+            # print(user.password)
+            # print(request)
             if user.authenticate(request.get_json()['password']):
+                # print(password)
                 session['user_id'] = user.id
                 response = make_response(
                     user.to_dict(),
                     200
                 )
                 return response
-        except:
+        except Exception as e:
+            print(str(e))
             abort(401, "Incorrect Username or Password")
 api.add_resource(Login, '/login')
 
@@ -170,6 +176,44 @@ class RequestsByID(Resource):
         )
         return response
 api.add_resource(RequestsByID, '/groups/<int:id>/requests')
+
+class Friendships(Resource):
+    def get(self):
+        try:
+            friendships = [f.to_dict(rules=('friend_id',)) for f in Friendship.query.all()]
+            return make_response(friendships, 200)
+        except Exception as e:
+            abort(404, [e.__str__()])
+    def post(self):
+        data = request.get_json()
+        friendship = Friendship(
+            user_id = data['user_id'],
+            friend_id = data['user_id']
+        )
+        friendship_reverse = Friendship(
+            user_id = data['friend_id'],
+            friend_id = data['user_id']
+        )
+        db.session.add(friendship)
+        db.session.add(friendship_reverse)
+        db.session.commit()
+        response = make_response(friendship.to_dict(), 201)
+        return response
+    def delete(self):
+        data = request.get_json()
+        friendship = Friendship.query.filter_by(
+            user_id = data['user_id'],
+            friend_id = data['friend_id']
+        ).first()
+        friendship_reverse = Friendship.query.filter_by(
+            user_id = data['friend_id'],
+            friend_id = data['user_id']
+        ).first()
+        db.session.delete(friendship)
+        db.session.delete(flask_restful)
+        db.session.commit()
+        return make_response('', 204)
+api.add_resource(Friendships, '/friendships')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

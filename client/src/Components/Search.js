@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useFormik } from 'formik'
 import * as yup from 'yup'
@@ -8,6 +9,7 @@ function Search({buttonText, groupOptions}) {
   const [selectedProgram, setSelectedProgram] = useState(initialValue);
   const [type, setType] = useState('')
   const [imdb_id, setImdb_id] = useState('')
+  const [selectedID, setSelectedID] = useState('')
 
   const formSchema = yup.object().shape({
           name: yup.string().required('Enter a name, dummy!'),
@@ -73,19 +75,24 @@ function Search({buttonText, groupOptions}) {
     console.log(program)
     program.title ? setSelectedProgram(program.title) : setSelectedProgram(program.name) 
     setImdb_id(program.id)
+    setSelectedID(program.id)
     return (
       null
     )
   }
   console.log(imdb_id)
+  console.log(selectedID)
 
   function createProgramCards(programs) {
   const programCards = programs.results.map(program => {
+    // console.log(program.id)
+  console.log(selectedID === program.id)
+  
     return (
       <div key={program.id} >
         <ul className='searchcard' >
           <li>
-            <h4> {program.title} <button onClick={() => handleClick(program)} > Select </button> </h4> 
+            <h4> {program.title} <button onClick={() => handleClick(program)} > {selectedID === program.id ? 'Selected' : 'Select'} </button> </h4> 
           </li>
           <li>
             <h4> {program.overview} </h4>
@@ -97,8 +104,8 @@ function Search({buttonText, groupOptions}) {
 
     )
   })
-  setRenderCards(programCards)
-  return null
+  // setRenderCards(programCards)
+  return programCards
   }
 
   return (
@@ -142,7 +149,8 @@ function Search({buttonText, groupOptions}) {
       </form>
       <br></br>
       {buttonText}
-      {renderCards}
+      {/* {renderCards} */}
+      {createProgramCards}
     </div>
   );
 }

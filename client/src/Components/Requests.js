@@ -11,11 +11,9 @@ function Requests({groupID}) {
         let type = ''
         if (request.type === 'movie') {
         type = request.type.charAt(0).toUpperCase() + request.type.slice(1)
-            console.log(request.type)
         }
         else if (request.type === 'tv') {
         type = 'Show'
-            console.log(request.type)
         }
         return (
             <div key={request.id} >

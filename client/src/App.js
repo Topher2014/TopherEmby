@@ -9,6 +9,7 @@ import AddRequest from './Components/AddRequest'
 import AddUsers from './Components/AddUsers'
 import Users from './Components/Users'
 import Search from './Components/Search'
+import Friends from './Components/Friends'
 
 function App() {
     const [user, setUser] = useState(null)
@@ -64,9 +65,9 @@ function App() {
             <Route path={`/addusers/:groupId`} >
                 <AddUsers users={users} fetchUsers={fetchUsers} />
             </Route>
-            {/* <Route path={`/search`} >
-                <Search />
-            </Route> */}
+            <Route path={`/friends`} >
+                <Friends user={user} users={users} fetchUsers={fetchUsers} />
+            </Route>
             <Route path={`/users`}>
                 <Users users={users} fetchUsers={fetchUsers} />
             </Route>
