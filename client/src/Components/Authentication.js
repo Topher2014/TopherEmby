@@ -3,6 +3,19 @@ import styled from 'styled-components'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import {useHistory} from 'react-router-dom'
+// import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+// import CssBaseline from '@mui/material/CssBaseline';
+// import TextField from '@mui/material/TextField';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
+// import Link from '@mui/material/Link';
+// import Grid from '@mui/material/Grid';
+// import Box from '@mui/material/Box';
+// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+// import Typography from '@mui/material/Typography';
+// import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function Authentication({updateUser}) {
     const [error, setError] = useState(false)
@@ -45,12 +58,17 @@ function Authentication({updateUser}) {
         },
     })
     return (
+      // <ThemeProvider >
         <> 
         <h2 style={{color:'red'}}> {formik.errors.name}</h2>
         {error&& <h2 style={{color:'red'}}> {error}</h2>}
         <h2>Please Log in or Sign up!</h2>
         <h2>{signUp?'Have an account?':'Not a member yet?'}</h2>
-        <button onClick={handleClick}>{signUp?'Log In':'Signup'}</button>
+        {/* <Button variant='contained' color='primary' onClick={handleClick}> */}
+        <Button variant='contained'  onClick={handleClick}>
+        {signUp?'Log In':'Signup'}
+        </Button>
+        {/* <button onClick={handleClick}>{signUp?'Log In':'Signup'}</button> */}
         <Form onSubmit={formik.handleSubmit}>
         <label>
           Username
@@ -72,6 +90,8 @@ function Authentication({updateUser}) {
         <input type='submit' value={signUp?'Sign Up!':'Log In!'} />
       </Form>
         </>
+
+      // </ThemeProvider>
     )
 }
 

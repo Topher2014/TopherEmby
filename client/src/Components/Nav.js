@@ -1,5 +1,18 @@
-import { useState } from 'react'
 import { NavLink, useHistory } from 'react-router-dom'
+// import Avatar from '@mui/material/Avatar';
+// import Button from '@mui/material/Button';
+// import CssBaseline from '@mui/material/CssBaseline';
+// import TextField from '@mui/material/TextField';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
+// import Link from '@mui/material/Link';
+// import Grid from '@mui/material/Grid';
+// import Box from '@mui/material/Box';
+// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+// import Typography from '@mui/material/Typography';
+// import Container from '@mui/material/Container';
+// import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 
 function Nav({updateUser}) {
     const history = useHistory()
@@ -15,6 +28,7 @@ function Nav({updateUser}) {
     }
 
     return (
+        // <ThemeProvider theme={theme}>
         <nav className = 'navigation'>
             <NavLink className='brand-name' exact to='/'>
                 <strong> Topher Emby </strong>
@@ -23,10 +37,11 @@ function Nav({updateUser}) {
                 <li onClick={handleLogout}> <NavLink exact to='/logout'> Logout </NavLink> </li>
                 <li> <NavLink exact to='/groups'> Groups </NavLink> </li>
                 <li> <NavLink to='/addrequest'> Add Request </NavLink> </li>
-                <li> <NavLink to='/friends'> Friends </NavLink> </li>
-                <li> <NavLink to='/users'> Users </NavLink> </li>
+                <li> <NavLink to='/friendsusers'> Friends/Users </NavLink> </li>
             </ul>
         </nav>
+
+        // </ThemeProvider>
     )
 }
 

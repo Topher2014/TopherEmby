@@ -1,11 +1,14 @@
-function GroupUsers({users}) {
+function GroupUsers({users, user}) {
     console.log(users)
-    const renderUsers = users.map((user) => {
+    const renderUsers = users.map((thisUser) => {
+        if(user.id === thisUser.id){
+            return null
+        }
         return (
-            <div key={user.id} >
+            <div key={thisUser.id} >
                 <ul className='usercard' >
                     <li>
-                        <h4> {user.name} </h4>
+                        <h4> {thisUser.name} </h4>
                     </li>
                 </ul>
             </div>

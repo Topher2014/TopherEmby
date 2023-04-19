@@ -19,7 +19,7 @@ function Requests({groupID}) {
             <div key={request.id} >
                 <ul className='requestcard' >
                     <li>
-                        <h4> {type} {request.name} {request.quality} </h4>
+                        <h4> {type} {request.name} {request.quality} {request.imdb_id}</h4>
                     </li>
                 </ul>
             </div>

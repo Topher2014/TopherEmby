@@ -13,13 +13,13 @@ with app.app_context():
     u0 = User(name='topher', email='blah@gmail.com')
     u0.password_hash='1'
     users.append(u0)
-    u1 = User(name='Sam')
+    u1 = User(name='Sam', email='sam@blah.com' )
     users.append(u1)
-    u2 = User(name='Nick')
+    u2 = User(name='Nick', email='nick@blah.com' )
     users.append(u2)
-    u3 = User(name='Billy')
+    u3 = User(name='Billy', email='billy@blah.com' )
     users.append(u3)
-    u4 = User(name='Kyle')
+    u4 = User(name='Kyle', email='kyle@blah.com' )
     users.append(u4)
     db.session.add_all(users)
 

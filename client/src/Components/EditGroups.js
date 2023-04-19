@@ -58,7 +58,7 @@ function EditGroups({groups, fetchGroups, setGroups, user}) {
             <ul className='groupcard' >
                 <li > {group.groups.name} </li>
                 <button className='button-30' onClick={() => handleDelete(group.groups.id)} > Delete </button>
-                <Link to={`/addusers/${group.groups.id}`} > Add Users </Link>
+                <Link to={`/addremoveusers/${group.groups.id}`} > Add Users </Link>
             </ul>
             </div>
             )

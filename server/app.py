@@ -87,6 +87,18 @@ class GroupUsers(Resource):
             201
         )
         return response
+    def delete(self):
+        data = request.get_json()
+        print(data)
+        groupuser = GroupUser.query.filter_by(group_id=data['group_id'], user_id=data['user_id']).first()
+        print(groupuser)
+        if not data:
+            return make_response({
+                "errors": "User not found"
+            }, 404)
+        db.session.delete(groupuser)
+        db.session.commit()
+        return make_response('deleted', 200)
 api.add_resource(GroupUsers, '/groupusers') 
 
 class AddUser(Resource):

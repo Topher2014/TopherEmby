@@ -18,7 +18,7 @@ function Groups({groups, fetchGroups, user}){
     const users = groups.map(mappedGroups => mappedGroups.groupuser).flat().filter(filteredGroups => filteredGroups.group_id === groupID).map(group => group.users)
     const buttonText = showUsers ? <button onClick={handleClick} > Show Requests </button> : <button onClick={handleClick} > Show Users </button>
     const initalButtonText = !initial ? buttonText : null
-    const renderInfo = showUsers ? <GroupUsers users={users} /> : <Requests groupID={groupID} /> 
+    const renderInfo = showUsers ? <GroupUsers users={users} user={user} /> : <Requests groupID={groupID} /> 
     const initialRenderInfo = !initial ? renderInfo : null
 
     const renderGroups = groups.map(mappedGroups => mappedGroups.groupuser).flat().filter(filteredGroups => filteredGroups.user_id === user.id).map(group => {

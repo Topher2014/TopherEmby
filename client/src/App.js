@@ -7,9 +7,7 @@ import Groups from './Components/Groups'
 import EditGroups from './Components/EditGroups'
 import AddRequest from './Components/AddRequest'
 import AddUsers from './Components/AddUsers'
-import Users from './Components/Users'
-import Search from './Components/Search'
-import Friends from './Components/Friends'
+import FriendsUsers from './Components/FriendsUsers'
 
 function App() {
     const [user, setUser] = useState(null)
@@ -62,14 +60,11 @@ function App() {
             <Route path={`/addrequest`} >
                 <AddRequest groups={groups} fetchGroups={fetchGroups} user={user} />
             </Route>
-            <Route path={`/addusers/:groupId`} >
+            <Route path={`/addremoveusers/:groupId`} >
                 <AddUsers users={users} fetchUsers={fetchUsers} user={user} groups={groups} fetchGroups={fetchGroups} />
             </Route>
-            <Route path={`/friends`} >
-                <Friends user={user} users={users} fetchUsers={fetchUsers} />
-            </Route>
-            <Route path={`/users`}>
-                <Users users={users} fetchUsers={fetchUsers} />
+            <Route path={`/friendsusers`} >
+                <FriendsUsers user={user} users={users} fetchUsers={fetchUsers} />
             </Route>
         </Switch>
         </div>
