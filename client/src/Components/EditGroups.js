@@ -2,7 +2,7 @@ import { useHistory, Link } from 'react-router-dom'
 import { useEffect, React } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-import {Button, ListItem, List, Container, Box, TextField, Typography} from '@mui/material';
+import {Button, ListItem, List, Container, Box, TextField, Typography, Chip} from '@mui/material';
 
 function EditGroups({groups, fetchGroups, setGroups, user}) {
     useEffect(() => {fetchGroups()}, [])
@@ -57,29 +57,19 @@ function EditGroups({groups, fetchGroups, setGroups, user}) {
         return (
             <Container key={group.groups.id} >
             <List className='groupcard' >
-                <ListItem > {group.groups.name} </ListItem>
-                <Button className='button-30' onClick={() => handleDelete(group.groups.id)} > Delete Group </Button>
+                <Chip label={group.groups.name} onDelete={() => handleDelete(group.groups.id)} />
                 <Button onClick={() => history.push(`/addremoveusers/${group.groups.id}`)} > Add/Remove Users  </Button>
-                {/* <Link to={`/addremoveusers/${group.groups.id}`} > Add Users </Link> */}
             </List>
             </Container>
             )
     })
     return (
-        <Container>
+        <Container sx={{marginTop: 10}} >
             <Typography> Edit Groups </Typography>
             <Typography style={{color:'red'}} > {formik.errors.name} </Typography>
             <Box className='groupform' component='form' onSubmit={formik.handleSubmit}>
                 <TextField label='Name: ' name='name' value={formik.values.name} onChange={formik.handleChange} />
-                {/* <label> Name: </label>
-                <textarea
-                type='text'
-                name='name'
-                value={formik.values.name}
-                onChange={formik.handleChange}
-                /> */}
                 <Button type='submit' > Add Group </Button>
-                {/* <input className='button-30' type='submit' /> */}
             </Box>
             <Box className='groupscontainer' > {renderGroups} </Box>
         </Container>

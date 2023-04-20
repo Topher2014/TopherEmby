@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import EnterManually from "./EnterManually"
 import Search from "./Search"
-import {Button, ListItem, List, Container, Box, TextField, Typography, MenuItem} from '@mui/material';
+import {Button, Container, Typography, MenuItem} from '@mui/material';
 
 function AddRequest({groups, fetchGroups, user}) {
     const [showManual, setShowManual] = useState(false)
@@ -18,7 +18,7 @@ function AddRequest({groups, fetchGroups, user}) {
     const buttonText = showManual ? <Button onClick={handleClick} > Search </Button> : <Button onClick={handleClick} > Don't see what you're looking for? Enter it manually! </Button> 
     const requestMethod = showManual ? <EnterManually buttonText={buttonText} groupOptions={groupOptions} /> : <Search buttonText={buttonText} groupOptions={groupOptions} /> 
     return (
-        <Container>
+        <Container sx={{marginTop: 10}} >
             <Typography> Add Request </Typography>
             {requestMethod}
             <br></br>

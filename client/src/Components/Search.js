@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-import {Button, ListItem, List,Card,Container, Box, TextField, Typography, Select, MenuItem, ImageList, ImageListItem} from '@mui/material';
+import {Button, Card, Container, Box, TextField, Typography, MenuItem, ImageList, ImageListItem} from '@mui/material';
 
 function Search({buttonText, groupOptions}) {
   const initialValue = 'Search Movie'
@@ -122,11 +122,8 @@ function Search({buttonText, groupOptions}) {
         <TextField type="text" name='searchterm' value={search.values.searchterm} onChange={search.handleChange} placeholder='Enter movie title'></TextField> 
         <Button type='submit' > Search </Button>
       </Box>
-      <br></br>
       {buttonText}
-      <ImageList  cols='3'>  {programCards} </ImageList>
-      {/* {programCards} */}
-      
+      <ImageList  cols={3}>  {programCards} </ImageList>
     </Container>
   );
 }

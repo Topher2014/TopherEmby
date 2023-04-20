@@ -1,7 +1,7 @@
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-import {Button, ListItem, List, Container, Box, TextField, Typography, Select, MenuItem} from '@mui/material';
-import { FormControl, InputLabel } from '@mui/material';
+import {Container, Box, TextField, Button, Typography, MenuItem} from '@mui/material';
+// import { Button } from 'bootstrap';
 
 function EnterManually({buttonText, groupOptions}) {
     const formSchema = yup.object().shape({
@@ -36,26 +36,25 @@ function EnterManually({buttonText, groupOptions}) {
   
     return (
         <Container>
-            {/* <h1> Add Request </h1> */}
             <Typography style={{color:'red'}}> {form.errors.name} </Typography>
             <Typography style={{color:'red'}}> {form.errors.type} </Typography>
             <Typography style={{color:'red'}}> {form.errors.quality} </Typography>
             <Typography style={{color:'red'}}> {form.errors.group_id} </Typography>
-            <Box className='requestform' onSubmit={form.handleSubmit} >
-                <TextField  label='Name' type='text' style={{width: '25%'}} name='name' value={form.values.name} onChange={form.handleChange} />
-                <TextField select autoWidth='true' style={{width: '25%'}}label='Type' labelId='Type: ' name='type' value={form.values.type} onChange={form.handleChange} >
+            <Box component='form' className='requestform' onSubmit={form.handleSubmit} >
+                <TextField  label='Name' type='text' style={{width: '23%'}} name='name' value={form.values.name} onChange={form.handleChange} />
+                <TextField select style={{width: '23%'}} label='Type' name='type' value={form.values.type} onChange={form.handleChange} >
                     <MenuItem value='movie' > Movie </MenuItem>
                     <MenuItem value='tv' > Show </MenuItem>
                 </TextField>
-                <TextField select autoWidth='true' style={{width: '25%'}} label='Quality' name='quality' value={form.values.quality} onChange={form.handleChange} >
+                <TextField select  style={{width: '23%'}} label='Quality' name='quality' value={form.values.quality} onChange={form.handleChange} >
                     <MenuItem value='720p' > 720p </MenuItem>
                     <MenuItem value='1080p' > 1080p </MenuItem>
                     <MenuItem value='4k' > 4k </MenuItem>
                 </TextField>
-                <TextField select name='group_id' style={{width: '25%'}} label='Group' value={form.values.group_id} onChange={form.handleChange} >
+                <TextField select name='group_id' style={{width: '23%'}} label='Group' value={form.values.group_id} onChange={form.handleChange} >
                     {groupOptions}
                 </TextField>
-                <TextField className='button-30' type='submit' />
+                <Button className='button-30' type='submit' > Submit </Button>
             </Box>
             <br></br>
             {buttonText}

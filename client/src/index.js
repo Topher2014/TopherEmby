@@ -24,6 +24,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: '#3D3D3D',
+      contrastText: '#fff'
       // main: '#E1E1E1',
     },
     secondary: {
@@ -64,4 +65,3 @@ root.render(
   </BrowserRouter>
 
 );
-// reportWebVitals();

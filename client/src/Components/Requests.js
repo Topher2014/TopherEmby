@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import {Button, ListItem, List, Container, Box, TextField, Typography} from '@mui/material';
+import {useState, useEffect} from 'react'
+import {ListItem, List, Container, Typography} from '@mui/material';
 
 function Requests({groupID}) {
     const [requests, setRequests] = useState([])
@@ -31,7 +31,7 @@ function Requests({groupID}) {
     return (
         <Container>
         <Typography> Requests </Typography>
-        <Typography> {renderRequests} </Typography>
+        {renderRequests}
         </Container>
     )
 }

@@ -1,4 +1,4 @@
-import {Button, ListItem, List, Container, Box, TextField, Typography} from '@mui/material';
+import {ListItem, List, Container, Typography} from '@mui/material';
 
 function GroupUsers({users, user}) {
     console.log(users)
@@ -20,7 +20,7 @@ function GroupUsers({users, user}) {
     return (
         <Container>
         <Typography> Users </Typography>
-        <Typography> {renderUsers} </Typography>
+        {renderUsers}
         </Container>
     )
 }

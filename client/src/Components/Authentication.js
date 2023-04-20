@@ -1,21 +1,13 @@
 import React, {useState} from 'react'
-import styled from 'styled-components'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import {useHistory} from 'react-router-dom'
-// import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function Authentication({updateUser}) {
     const [error, setError] = useState(false)
@@ -52,7 +44,6 @@ function Authentication({updateUser}) {
                   history.push('/')
                 })
               } else {
-                //15.2 render the error if the user's authentication fails
                 res.json().then(error => setError(error.message))
               }
             })
@@ -60,77 +51,39 @@ function Authentication({updateUser}) {
         },
     })
     return (
-        <Container>
-          {/* <Box> */}
-        {/* <h2 style={{color:'red'}}> {formik.errors.name}</h2> */}
-        <Typography sx={{color:'red'}}> {formik.errors.name} </Typography>
-        <Typography style={{color:'red'}}> {formik.errors.password} </Typography>
-        <Typography style={{color:'red'}} > {formik.errors.email} </Typography>
-        {error&& <h2 style={{color:'red'}} > {error}</h2>}
-        {/* <h2>Please Log in or Sign up! </h2> */}
-        <Typography > Please Log in or Sign up! </Typography>
-        <Typography> {signUp?'Have an account?':'Not a member yet?'} </Typography>
-        {/* <h2>{signUp?'Have an account?':'Not a member yet?'}</h2> */}
-        {/* <Button variant='contained' color='primary' onClick={handleClick}> */}
-        <Button variant='contained'  onClick={handleClick}>
-        {signUp?'Log In':'Signup'}
-        </Button>
-        {/* <button onClick={handleClick}>{signUp?'Log In':'Signup'}</button> */}
-        <Box component='form' onSubmit={formik.handleSubmit}>
-          <Grid>
-            <TextField label='Username' name='name' value={formik.values.name} onChange={formik.handleChange}/>
-          </Grid>
-          <Grid>
-            <TextField label='Password' name='password' value={formik.values.password} onChange={formik.handleChange} />
-          </Grid>
-        {/* <label>
-          Username
-          </label>
-        <input type='text' name='name' value={formik.values.name} onChange={formik.handleChange} /> */}
-        {/* <label>
-           Password
-           </label>
-           <input type='password' name='password' value={formik.values.password} onChange={formik.handleChange} /> */}
-        {signUp&&(
-          <Grid>
-            <TextField label='Email' name='email' value={formik.values.email} onChange={formik.handleChange} />
-          </Grid>
-          // <>
-          // <label>
-          // Email
-          // </label>
-          // <input type='text' name='email' value={formik.values.email} onChange={formik.handleChange} />
-           
-          //  </>
-        )}
-        <Button type='submit'   > {signUp?'Sign Up!':'Log In!'} </Button>
-        {/* <input type='submit' value={signUp?'Sign Up!':'Log In!'} /> */}
-
-          {/* </Box> */}
-
-
-        </Box>
+        <Container
+           sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }}>
+          <Typography sx={{color:'red'}}> {formik.errors.name} </Typography>
+          <Typography style={{color:'red'}}> {formik.errors.password} </Typography>
+          <Typography style={{color:'red'}} > {formik.errors.email} </Typography>
+          {error&& <h2 style={{color:'red'}} > {error}</h2>}
+          <Typography > Please Log in or Sign up! </Typography>
+          <Typography> {signUp?'Have an account?':'Not a member yet?'} </Typography>
+          <Button variant='contained'  onClick={handleClick}>
+          {signUp?'Log In':'Signup'}
+          </Button>
+            <Box component='form' onSubmit={formik.handleSubmit}>
+              <Grid>
+                <TextField label='Username' name='name' value={formik.values.name} onChange={formik.handleChange}/>
+              </Grid>
+              <Grid>
+                <TextField label='Password' type='password' name='password' value={formik.values.password} onChange={formik.handleChange} />
+              </Grid>
+            {signUp&&(
+              <Grid>
+                <TextField label='Email' name='email' value={formik.values.email} onChange={formik.handleChange} />
+              </Grid>
+            )}
+            <Button type='submit'   > {signUp?'Sign Up!':'Log In!'} </Button>
+            </Box>
         </Container>
 
     )
 }
 
 export default Authentication
-
-// export const Form = styled.form`
-// display:flex;
-// flex-direction:column;
-// width: 400px;
-// margin:auto;
-// font-family:Arial;
-// font-size:30px;
-// input[type=submit]{
-//   background-color:#42ddf5;
-//   color: white;
-//   height:40px;
-//   font-family:Arial;
-//   font-size:30px;
-//   margin-top:10px;
-//   margin-bottom:10px;
-// }
-// `

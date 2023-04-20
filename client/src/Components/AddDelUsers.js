@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import {Button, ListItem, List, Container, Box, TextField, Typography} from '@mui/material';
+import {Button, ListItem, List, Container, Typography, Chip} from '@mui/material';
 
 function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
     const {groupId} = useParams()
@@ -27,7 +27,6 @@ function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
         })
             window.location.reload(true)
     }
-    console.log(users)
 
     const groupIDs = groups.map(mappedGroups => mappedGroups.groupuser).flat().filter(filteredGroup => filteredGroup.group_id === parseInt(groupId)).map(group => group.user_id)
     const addUsers = user.friends.map((user) => {
@@ -37,8 +36,7 @@ function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
         return (
             <Container key={user.id} >
             <List className='usercard' >
-                <ListItem > {user.name} </ListItem>
-                <Button className='button-30' onClick={() => handleAddClick(user.id, groupId)} > Add </Button>
+                <Chip label={user.name} onClick={() => handleAddClick(user.id, groupId)} />
             </List>
             </Container>
         )
@@ -54,8 +52,7 @@ function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
             <Container key={thisUser.id} >
                 <List className='usercard' >
                     <ListItem>
-                        <Typography> {thisUser.name} </Typography>
-                        <Button className='button-30' onClick={() => handleDeleteClick(thisUser.id, groupId)} > Remove </Button>
+                        <Chip label={thisUser.name} onDelete={() => handleDeleteClick(thisUser.id, groupId)} />
                     </ListItem>
                 </List>
             </Container>
@@ -65,13 +62,16 @@ function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
     function handleClick() {
         setShowFriends((toggle) => !toggle)
     }
-    const buttonText = showFriends ? <Button onClick={handleClick} > Add Friends to Group </Button> : <Button onClick={handleClick} > Remove Users from Group </Button>
+    const buttonText = showFriends ? <Button onClick={handleClick} > Add Friends to Group </Button> : <Button onClick={handleClick} > Remove Friends from Group </Button>
     const renderUsers = showFriends ? removeUsers : addUsers
+    const group = groups.filter(group => group.id === parseInt(groupId))
+    const friendInfo = showFriends ? <Typography> These are your friends currently in {group[0].name}. Click to remove. </Typography> : <Typography> These are friends who can be added to {group[0].name}. Click to add.  </Typography>
     return (
-        <Container>
+        <Container sx={{marginTop: 10}}>
             <Typography> Add/Remove Users to Group</Typography>
             {buttonText}
-            <Typography> {renderUsers} </Typography>
+            {friendInfo}
+            {renderUsers}
         </Container>
     )
 }
