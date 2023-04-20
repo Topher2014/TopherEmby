@@ -1,5 +1,7 @@
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import {Button, ListItem, List, Container, Box, TextField, Typography, Select, MenuItem} from '@mui/material';
+import { FormControl, InputLabel } from '@mui/material';
 
 function EnterManually({buttonText, groupOptions}) {
     const formSchema = yup.object().shape({
@@ -33,38 +35,31 @@ function EnterManually({buttonText, groupOptions}) {
     })
   
     return (
-        <div>
+        <Container>
             {/* <h1> Add Request </h1> */}
-            <h2 style={{color:'red'}}> {form.errors.name} </h2>
-            <h2 style={{color:'red'}}> {form.errors.type} </h2>
-            <h2 style={{color:'red'}}> {form.errors.quality} </h2>
-            <h2 style={{color:'red'}}> {form.errors.group_id} </h2>
-            <form className='requestform' onSubmit={form.handleSubmit} >
-                <label> Name: </label>
-                <input type='text' name='name' value={form.values.name} onChange={form.handleChange} />
-                <label> Type: </label>
-                <select name='type' value={form.values.type} onChange={form.handleChange} >
-                    <option value='' >  </option>
-                    <option value='movie' > Movie </option>
-                    <option value='tv' > Show </option>
-                </select>
-                <label> Quality: </label>
-                <select name='quality' value={form.values.quality} onChange={form.handleChange} >
-                    <option value='' >  </option>
-                    <option value='720p' > 720p </option>
-                    <option value='1080p' > 1080p </option>
-                    <option value='4k' > 4k </option>
-                </select>
-                <label> Group: </label>
-                <select name='group_id' value={form.values.group_id} onChange={form.handleChange} >
-                    <option value='' >  </option>
+            <Typography style={{color:'red'}}> {form.errors.name} </Typography>
+            <Typography style={{color:'red'}}> {form.errors.type} </Typography>
+            <Typography style={{color:'red'}}> {form.errors.quality} </Typography>
+            <Typography style={{color:'red'}}> {form.errors.group_id} </Typography>
+            <Box className='requestform' onSubmit={form.handleSubmit} >
+                <TextField  label='Name' type='text' style={{width: '25%'}} name='name' value={form.values.name} onChange={form.handleChange} />
+                <TextField select autoWidth='true' style={{width: '25%'}}label='Type' labelId='Type: ' name='type' value={form.values.type} onChange={form.handleChange} >
+                    <MenuItem value='movie' > Movie </MenuItem>
+                    <MenuItem value='tv' > Show </MenuItem>
+                </TextField>
+                <TextField select autoWidth='true' style={{width: '25%'}} label='Quality' name='quality' value={form.values.quality} onChange={form.handleChange} >
+                    <MenuItem value='720p' > 720p </MenuItem>
+                    <MenuItem value='1080p' > 1080p </MenuItem>
+                    <MenuItem value='4k' > 4k </MenuItem>
+                </TextField>
+                <TextField select name='group_id' style={{width: '25%'}} label='Group' value={form.values.group_id} onChange={form.handleChange} >
                     {groupOptions}
-                </select>
-                <input className='button-30' type='submit' />
-            </form>
+                </TextField>
+                <TextField className='button-30' type='submit' />
+            </Box>
             <br></br>
             {buttonText}
-        </div>
+        </Container>
     )
 }
 

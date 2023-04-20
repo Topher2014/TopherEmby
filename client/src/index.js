@@ -13,9 +13,9 @@ import { BrowserRouter } from 'react-router-dom';
 // import Link from '@mui/material/Link';
 // import Grid from '@mui/material/Grid';
 // import Box from '@mui/material/Box';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 // import Typography from '@mui/material/Typography';
 // import Container from '@mui/material/Container';
+// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
@@ -24,6 +24,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: '#3D3D3D',
+      // main: '#E1E1E1',
     },
     secondary: {
       main: '#282828',

@@ -6,7 +6,7 @@ import { Switch, Route } from 'react-router-dom'
 import Groups from './Components/Groups'
 import EditGroups from './Components/EditGroups'
 import AddRequest from './Components/AddRequest'
-import AddUsers from './Components/AddUsers'
+import AddDelUsers from './Components/AddDelUsers'
 import FriendsUsers from './Components/FriendsUsers'
 
 function App() {
@@ -61,7 +61,7 @@ function App() {
                 <AddRequest groups={groups} fetchGroups={fetchGroups} user={user} />
             </Route>
             <Route path={`/addremoveusers/:groupId`} >
-                <AddUsers users={users} fetchUsers={fetchUsers} user={user} groups={groups} fetchGroups={fetchGroups} />
+                <AddDelUsers users={users} fetchUsers={fetchUsers} user={user} groups={groups} fetchGroups={fetchGroups} />
             </Route>
             <Route path={`/friendsusers`} >
                 <FriendsUsers user={user} users={users} fetchUsers={fetchUsers} />

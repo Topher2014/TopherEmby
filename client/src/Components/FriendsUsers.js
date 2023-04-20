@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import {Button, ListItem, List, Container, Box, TextField, Typography} from '@mui/material';
 
 function FriendsUsers({user, users, fetchUsers}) {
     useEffect(() => {fetchUsers()}, [])
@@ -41,7 +42,7 @@ function FriendsUsers({user, users, fetchUsers}) {
     function handleClick() {
         setShowFriends((toggle) => !toggle)
     }
-    const buttonText = showFriends ? <button onClick={handleClick} > Show Friends </button> : <button onClick={handleClick} > Show All Users </button>
+    const buttonText = showFriends ? <Button onClick={handleClick} > Show Friends </Button> : <Button onClick={handleClick} > Show All Users </Button>
     
     const friendIDs = user.friends.map(friend => friend.id)
     const handleChange = (event) => {
@@ -60,36 +61,36 @@ function FriendsUsers({user, users, fetchUsers}) {
         if (!showFriends){
             if (friendIDs.includes(filteredUser.id)){
             return (
-            <div key={filteredUser.id}>
+            <Container key={filteredUser.id}>
                 {filteredUser.name}
-                {isFriend ? <button onClick={() => handleDeleteFriendClick(filteredUser.id)}> Delete Friend </button> : <button onClick={() => handleAddFriendClick(filteredUser.id)}> Add Friend </button>}
-            </div>
+                {isFriend ? <Button onClick={() => handleDeleteFriendClick(filteredUser.id)}> Delete Friend </Button> : <Button onClick={() => handleAddFriendClick(filteredUser.id)}> Add Friend </Button>}
+            </Container>
             )
             }
             else return null
             }
         else if (showFriends){
             return (
-            <div key={filteredUser.id}>
+            <Container key={filteredUser.id}>
                 {filteredUser.name}
-                {isFriend ? <button onClick={() => handleDeleteFriendClick(filteredUser.id)}> Delete Friend </button> : <button onClick={() => handleAddFriendClick(filteredUser.id)}> Add Friend </button>}
-            </div>
+                {isFriend ? <Button onClick={() => handleDeleteFriendClick(filteredUser.id)}> Delete Friend </Button> : <Button onClick={() => handleAddFriendClick(filteredUser.id)}> Add Friend </Button>}
+            </Container>
             )
             }
     return null
     })
 
     return (
-        <div>
-            <h1> Users </h1>
+        <Container>
+            <Typography> Users </Typography>
             {buttonText}
             <br></br>
             <br></br>
-            <input onChange={(event) => handleChange(event)}/>  
+            <TextField onChange={(event) => handleChange(event)}/>  
             <br></br>
             <br></br>
             {renderUsers}
-        </div>
+        </Container>
     )
 }
 

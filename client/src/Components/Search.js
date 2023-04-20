@@ -1,10 +1,10 @@
-
 import { useState } from 'react';
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import {Button, ListItem, List,Card,Container, Box, TextField, Typography, Select, MenuItem, ImageList, ImageListItem} from '@mui/material';
 
 function Search({buttonText, groupOptions}) {
-  const initialValue = '-----------------'
+  const initialValue = 'Search Movie'
   const [selectedProgram, setSelectedProgram] = useState(initialValue);
   const [type, setType] = useState('')
   const [imdb_id, setImdb_id] = useState('')
@@ -82,65 +82,52 @@ function Search({buttonText, groupOptions}) {
   if (retrievedData.results) {
     programCards = retrievedData.results.map(program => {
     return (
-      <div key={program.id} >
-        <ul className='searchcard' >
-          <li>
-            <h4> {program.title} <button onClick={() => handleClick(program)} > {imdb_id === program.id ? 'Selected' : 'Select'} </button> </h4> 
-          </li>
-          <li>
-            <h4> {program.overview} </h4>
-            
-          </li>
-            <img src={`https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${program.poster_path}`} alt={program.title} />
-        </ul>
-      </div>
+      <Container key={program.id} >
+         <Card sx={{maxWidth: '250px'}}className='searchcard' >
+            <Typography noWrap> {program.title}  </Typography> <Button onClick={() => handleClick(program)} > {imdb_id === program.id ? 'Selected' : 'Select'} </Button>
+            <ImageListItem>  <img src={`https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${program.poster_path}`} alt={program.title} /> </ImageListItem>
+            {/* <ImageListItem>  <img src={`https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${program.poster_path}`} onerror="this.onerror=null;this.src='https://github.com/linjdiana/flatiron_abs/blob/main/images/chad.jpeg';" alt={program.title} /> </ImageListItem> */}
+            <Typography component={'p'} sx={{'&:hover':{'whiteSpace':'normal'}}} noWrap> {program.overview} </Typography>
+
+         </Card>
+       </Container>
 
       )}
   )}
 
   return (
-    <div>
-      <h2 style={{color:'red'}}> {form.errors.quality} </h2>
-      <h2 style={{color:'red'}}> {form.errors.group_id} </h2>
-      <h2 style={{color:'red'}}> {search.errors.type} </h2>
-      <h2 style={{color:'red'}}> {search.errors.searchterm} </h2>
-      <form className='requestform' onSubmit={form.handleSubmit} >
-          <label> Name: {selectedProgram} </label>
-          <label> Quality: </label>
-          <select name='quality' value={form.values.quality} onChange={form.handleChange} >
-              <option value='' >  </option>
-              <option value='720p' > 720p </option>
-              <option value='1080p' > 1080p </option>
-              <option value='4k' > 4k </option>
-          </select>
-          <label> Group: </label>
-          <select name='group_id' value={form.values.group_id} onChange={form.handleChange} >
-              <option value='' > </option>
+    <Container>
+      <Typography style={{color:'red'}}> {form.errors.quality} </Typography>
+      <Typography style={{color:'red'}}> {form.errors.group_id} </Typography>
+      <Typography style={{color:'red'}}> {search.errors.type} </Typography>
+      <Typography style={{color:'red'}}> {search.errors.searchterm} </Typography>
+      <Box component='form' className='requestform' onSubmit={form.handleSubmit} >
+          <TextField disabled label={selectedProgram} style={{width: '25%'}} > {selectedProgram} </TextField>
+          <TextField label='Quality' select name='quality' style={{width: '25%'}} value={form.values.quality} onChange={form.handleChange} >
+              <MenuItem value='720p' > 720p </MenuItem>
+              <MenuItem value='1080p' > 1080p </MenuItem>
+              <MenuItem value='4k' > 4k </MenuItem>
+          </TextField>
+          <TextField label='Group' select name='group_id' style={{width: '25%'}} value={form.values.group_id} onChange={form.handleChange} >
               {groupOptions}
-          </select>
-          <input className='button-30' type='submit' />
-      </form>
+          </TextField>
+          <Button className='button-30' type='submit' > Submit </Button>
+      </Box>
       <br></br>
-      <form onSubmit={search.handleSubmit}>
-        <label> Type: </label>
-        <select name='type' value={search.values.type} onChange={search.handleChange} >
-            <option value='' >  </option>
-            <option value='movie' > Movie </option>
-            <option value='tv' > Show </option>
-        </select>
-        <input
-          type="text"
-          name='searchterm'
-          value={search.values.searchterm}
-          onChange={search.handleChange}
-          placeholder="Enter movie title"
-        />
-        <button type="submit">Search</button>
-      </form>
+      <Box component='form' onSubmit={search.handleSubmit}>
+        <TextField select label='Type' name='type' style={{width: '10%'}} value={search.values.type} onChange={search.handleChange} >
+            <MenuItem value='movie' > Movie </MenuItem>
+            <MenuItem value='tv' > Show </MenuItem>
+        </TextField >
+        <TextField type="text" name='searchterm' value={search.values.searchterm} onChange={search.handleChange} placeholder='Enter movie title'></TextField> 
+        <Button type='submit' > Search </Button>
+      </Box>
       <br></br>
       {buttonText}
-      {programCards}
-    </div>
+      <ImageList  cols='3'>  {programCards} </ImageList>
+      {/* {programCards} */}
+      
+    </Container>
   );
 }
 

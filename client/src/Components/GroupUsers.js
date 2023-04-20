@@ -1,3 +1,5 @@
+import {Button, ListItem, List, Container, Box, TextField, Typography} from '@mui/material';
+
 function GroupUsers({users, user}) {
     console.log(users)
     const renderUsers = users.map((thisUser) => {
@@ -5,21 +7,21 @@ function GroupUsers({users, user}) {
             return null
         }
         return (
-            <div key={thisUser.id} >
-                <ul className='usercard' >
-                    <li>
-                        <h4> {thisUser.name} </h4>
-                    </li>
-                </ul>
-            </div>
+            <Container key={thisUser.id} >
+                <List className='usercard' >
+                    <ListItem>
+                        <Typography> {thisUser.name} </Typography>
+                    </ListItem>
+                </List>
+            </Container>
         )
     })
 
     return (
-        <div>
-        <h1> Users </h1>
-        <h4> {renderUsers} </h4>
-        </div>
+        <Container>
+        <Typography> Users </Typography>
+        <Typography> {renderUsers} </Typography>
+        </Container>
     )
 }
 

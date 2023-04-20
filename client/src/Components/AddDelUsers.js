@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import {Button, ListItem, List, Container, Box, TextField, Typography} from '@mui/material';
 
-function AddUsers({users, fetchUsers, user, groups, fetchGroups}) {
+function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
     const {groupId} = useParams()
     useEffect(() => {fetchUsers(); fetchGroups()}, [])
 
@@ -34,12 +35,12 @@ function AddUsers({users, fetchUsers, user, groups, fetchGroups}) {
             return null
             }
         return (
-            <div key={user.id} >
-            <ul className='usercard' >
-                <li > {user.name} </li>
-                <button className='button-30' onClick={() => handleAddClick(user.id, groupId)} > Add </button>
-            </ul>
-            </div>
+            <Container key={user.id} >
+            <List className='usercard' >
+                <ListItem > {user.name} </ListItem>
+                <Button className='button-30' onClick={() => handleAddClick(user.id, groupId)} > Add </Button>
+            </List>
+            </Container>
         )
     })
     const removeUsers = users.map((thisUser) => {
@@ -50,29 +51,29 @@ function AddUsers({users, fetchUsers, user, groups, fetchGroups}) {
             return null
             }
         return (
-            <div key={thisUser.id} >
-                <ul className='usercard' >
-                    <li>
-                        <h4> {thisUser.name} </h4>
-                        <button className='button-30' onClick={() => handleDeleteClick(thisUser.id, groupId)} > Remove </button>
-                    </li>
-                </ul>
-            </div>
+            <Container key={thisUser.id} >
+                <List className='usercard' >
+                    <ListItem>
+                        <Typography> {thisUser.name} </Typography>
+                        <Button className='button-30' onClick={() => handleDeleteClick(thisUser.id, groupId)} > Remove </Button>
+                    </ListItem>
+                </List>
+            </Container>
         )
     })
     const [showFriends, setShowFriends] = useState(false)
     function handleClick() {
         setShowFriends((toggle) => !toggle)
     }
-    const buttonText = showFriends ? <button onClick={handleClick} > Add Friends to Group </button> : <button onClick={handleClick} > Remove Users from Group </button>
+    const buttonText = showFriends ? <Button onClick={handleClick} > Add Friends to Group </Button> : <Button onClick={handleClick} > Remove Users from Group </Button>
     const renderUsers = showFriends ? removeUsers : addUsers
     return (
-        <div>
-            <h1> Add/Remove Users to Group</h1>
+        <Container>
+            <Typography> Add/Remove Users to Group</Typography>
             {buttonText}
-            <h4> {renderUsers} </h4>
-        </div>
+            <Typography> {renderUsers} </Typography>
+        </Container>
     )
 }
 
-export default AddUsers
+export default AddDelUsers

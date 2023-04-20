@@ -2,6 +2,7 @@ import { useHistory, Link } from 'react-router-dom'
 import { useEffect, React } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import {Button, ListItem, List, Container, Box, TextField, Typography} from '@mui/material';
 
 function EditGroups({groups, fetchGroups, setGroups, user}) {
     useEffect(() => {fetchGroups()}, [])
@@ -54,31 +55,34 @@ function EditGroups({groups, fetchGroups, setGroups, user}) {
     const renderGroups = groups.map(mappedGroups => mappedGroups.groupuser).flat().filter(filteredGroups => filteredGroups.user_id === user.id).map(group => {
         console.log(group)
         return (
-            <div key={group.groups.id} >
-            <ul className='groupcard' >
-                <li > {group.groups.name} </li>
-                <button className='button-30' onClick={() => handleDelete(group.groups.id)} > Delete </button>
-                <Link to={`/addremoveusers/${group.groups.id}`} > Add Users </Link>
-            </ul>
-            </div>
+            <Container key={group.groups.id} >
+            <List className='groupcard' >
+                <ListItem > {group.groups.name} </ListItem>
+                <Button className='button-30' onClick={() => handleDelete(group.groups.id)} > Delete Group </Button>
+                <Button onClick={() => history.push(`/addremoveusers/${group.groups.id}`)} > Add/Remove Users  </Button>
+                {/* <Link to={`/addremoveusers/${group.groups.id}`} > Add Users </Link> */}
+            </List>
+            </Container>
             )
     })
     return (
-        <div>
-            <h1> Edit Groups </h1>
-            <h2 style={{color:'red'}} > {formik.errors.name} </h2>
-            <form className='groupform' onSubmit={formik.handleSubmit}>
-                <label> Name: </label>
+        <Container>
+            <Typography> Edit Groups </Typography>
+            <Typography style={{color:'red'}} > {formik.errors.name} </Typography>
+            <Box className='groupform' component='form' onSubmit={formik.handleSubmit}>
+                <TextField label='Name: ' name='name' value={formik.values.name} onChange={formik.handleChange} />
+                {/* <label> Name: </label>
                 <textarea
                 type='text'
                 name='name'
                 value={formik.values.name}
                 onChange={formik.handleChange}
-                />
-                <input className='button-30' type='submit' />
-            </form>
-            <div className='groupscontainer' > {renderGroups} </div>
-        </div>
+                /> */}
+                <Button type='submit' > Add Group </Button>
+                {/* <input className='button-30' type='submit' /> */}
+            </Box>
+            <Box className='groupscontainer' > {renderGroups} </Box>
+        </Container>
     )
 }
 
