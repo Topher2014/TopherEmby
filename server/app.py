@@ -1,12 +1,18 @@
-from flask import Flask, make_response, request, session, abort, jsonify
+from flask import Flask, make_response, request, session, abort, jsonify, render_template
 from flask_restful import Api, Resource
 from config import db, app, Api
 from models import User, Group, GroupUser, Request, Friendship
 from werkzeug.exceptions import NotFound, Unauthorized
 
 @app.route('/')
-def index():
-    return '<h1>ToooopppherEEEEmmmmbbbyyy</h1>'
+@app.route('/<int:id>')
+def index(id=0):
+    return render_template("index.html")
+
+
+# @app.route('/')
+# def index():
+#     return '<h1>ToooopppherEEEEmmmmbbbyyy</h1>'
 
 api = Api(app)
 
@@ -89,9 +95,7 @@ class GroupUsers(Resource):
         return response
     def delete(self):
         data = request.get_json()
-        print(data)
         groupuser = GroupUser.query.filter_by(group_id=data['group_id'], user_id=data['user_id']).first()
-        print(groupuser)
         if not data:
             return make_response({
                 "errors": "User not found"
@@ -100,6 +104,20 @@ class GroupUsers(Resource):
         db.session.commit()
         return make_response('deleted', 200)
 api.add_resource(GroupUsers, '/groupusers') 
+
+class DeleteRequest(Resource):
+    def delete(self):
+        data = request.get_json()
+        bleg = Request.query.filter_by(id=data['id']).first()
+        if not data:
+            return make_response({
+                "errors": "Request not found"
+            }, 404)
+        db.session.delete(bleg)
+        db.session.commit()
+        return make_response('deleted', 200)
+api.add_resource(DeleteRequest, '/deleterequest') 
+
 
 class AddUser(Resource):
     def post(self):
@@ -120,12 +138,7 @@ class Login(Resource):
     def post(self):
         try: 
             user = User.query.filter_by(name=request.get_json()['name']).first()
-            # print(user)
-            # print(user.name)
-            # print(user.password)
-            # print(request)
             if user.authenticate(request.get_json()['password']):
-                # print(password)
                 session['user_id'] = user.id
                 response = make_response(
                     user.to_dict(),
@@ -181,7 +194,7 @@ api.add_resource(Requests, '/addrequest')
 class RequestsByID(Resource):
     def get(self, id):
         requests = [r.to_dict() for r in Request.query.filter_by(group_id=id)]
-        print(requests)
+        # print(requests)
         response = make_response(
             requests,
             200
