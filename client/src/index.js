@@ -23,38 +23,67 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#3D3D3D',
-      contrastText: '#fff'
-      // main: '#E1E1E1',
+      main: '#2e7d32',
     },
     secondary: {
-      main: '#282828',
+      main: '#ff3d00',
     },
   },
   typography: {
-    h1: {
-      fontSize: '3rem',
-      color: '#E1E1E1',
+    fontSize: 14,
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
+  },
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontSize: 38,
+          fontWeight: 'bold',
+          marginBottom: 16,
+        },
+      },
     },
-    h2: {
-      fontSize: '2rem',
-      color: '#E1E1E1',
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          margin: '16px 0',
+          fontWeight: 'bold',
+          '&.MuiButton-primary': {
+            color: 'white',
+            background: '#2e7d32',
+            '&:hover': {
+              background: '#1b5e20',
+            },
+          },
+        },
+      },
     },
-    h3: {
-      color: '#E1E1E1',
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          margin: '16px 0',
+        },
+      },
     },
-    h4: {
-      color: '#E1E1E1',
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          margin: '4px',
+        },
+      },
     },
-    h5: {
-      color: '#E1E1E1',
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: '#fafafa',
+          },
+        },
+      },
     },
-    h6: {
-      color: '#E1E1E1',
-    },
-    h7: {
-      color: '#E1E1E1',
-    }
   },
 });
 root.render(

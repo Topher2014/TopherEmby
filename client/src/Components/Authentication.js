@@ -21,7 +21,7 @@ function Authentication({updateUser}) {
         email: yup.string().email('Please enter a valid email')
       })
 
-    const formik = useFormik({
+    const form = useFormik({
         initialValues: {
             name:'',
             email:'',
@@ -57,30 +57,59 @@ function Authentication({updateUser}) {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                justifyContent: 'center'
             }}>
-          <Typography sx={{color:'red'}}> {formik.errors.name} </Typography>
-          <Typography style={{color:'red'}}> {formik.errors.password} </Typography>
-          <Typography style={{color:'red'}} > {formik.errors.email} </Typography>
           {error&& <h2 style={{color:'red'}} > {error}</h2>}
           <Typography > Please Log in or Sign up! </Typography>
           <Typography> {signUp?'Have an account?':'Not a member yet?'} </Typography>
           <Button variant='contained'  onClick={handleClick}>
           {signUp?'Log In':'Signup'}
           </Button>
-            <Box component='form' onSubmit={formik.handleSubmit}>
+          <Grid container spacing={2} justifyContent='center' >
+            <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}component='form' onSubmit={form.handleSubmit}>
               <Grid>
-                <TextField label='Username' name='name' value={formik.values.name} onChange={formik.handleChange}/>
+              <TextField
+                type='text'
+                name="name"
+                label="Username"
+                value={form.values.name}
+                onChange={form.handleChange}
+                sx={{ width: 'calc(120% - 10px)' }}
+                error={form.touched.name && Boolean(form.errors.name)}
+                helperText={form.touched.name && form.errors.name}
+              />
               </Grid>
               <Grid>
-                <TextField label='Password' type='password' name='password' value={formik.values.password} onChange={formik.handleChange} />
+              <TextField
+                type='password'
+                name="password"
+                label="Password"
+                value={form.values.password}
+                onChange={form.handleChange}
+                sx={{ width: 'calc(120% - 10px)' }}
+                error={form.touched.password && Boolean(form.errors.password)}
+                helperText={form.touched.password && form.errors.password}
+              />
               </Grid>
             {signUp&&(
               <Grid>
-                <TextField label='Email' name='email' value={formik.values.email} onChange={formik.handleChange} />
+              <TextField
+                type='text'
+                name="email"
+                label="Email"
+                value={form.values.email}
+                onChange={form.handleChange}
+                sx={{ width: 'calc(120% - 10px)' }}
+                error={form.touched.email && Boolean(form.errors.email)}
+                helperText={form.touched.email && form.errors.email}
+              />
               </Grid>
             )}
+            <Grid>
             <Button type='submit'   > {signUp?'Sign Up!':'Log In!'} </Button>
+            </Grid>
             </Box>
+          </Grid>
         </Container>
 
     )

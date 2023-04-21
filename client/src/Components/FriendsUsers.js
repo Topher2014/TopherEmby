@@ -1,5 +1,16 @@
 import { useEffect, useState } from 'react'
 import {Button, Container, TextField, Typography, Chip} from '@mui/material';
+import { styled } from '@mui/system';
+
+const EditButton = styled(Button)({
+  margin: '16px 0',
+  fontWeight: 'bold',
+  color: 'white',
+  background: '#2e7d32',
+  '&:hover': {
+    background: '#1b5e20',
+  },
+});
 
 function FriendsUsers({user, users, fetchUsers}) {
     useEffect(() => {fetchUsers()}, [])
@@ -42,7 +53,7 @@ function FriendsUsers({user, users, fetchUsers}) {
     function handleClick() {
         setShowFriends((toggle) => !toggle)
     }
-    const buttonText = showFriends ? <Button onClick={handleClick} > Show Friends </Button> : <Button onClick={handleClick} > Show All Users </Button>
+    const buttonText = showFriends ? <EditButton onClick={handleClick} > Show Friends </EditButton> : <EditButton onClick={handleClick} > Show All Users </EditButton>
     const searchText = showFriends ? 'Search All Users' : 'Search Friends' 
     
     const friendIDs = user.friends.map(friend => friend.id)
@@ -64,7 +75,7 @@ function FriendsUsers({user, users, fetchUsers}) {
             return (
             <Container key={filteredUser.id}>
                 <br></br>
-                {isFriend ? <Chip label={filteredUser.name} onDelete={() => handleDeleteFriendClick(filteredUser.id)} />  : <Chip label={filteredUser.name} onClick={() => handleAddFriendClick(filteredUser.id)} /> }
+                {isFriend ? <Chip color='primary' label={filteredUser.name} onDelete={() => handleDeleteFriendClick(filteredUser.id)} />  : <Chip color='primary' label={filteredUser.name} onClick={() => handleAddFriendClick(filteredUser.id)} /> }
                 <br></br>
             </Container>
             )
@@ -75,7 +86,7 @@ function FriendsUsers({user, users, fetchUsers}) {
             return (
             <Container key={filteredUser.id}>
                 <br></br>
-                {isFriend ? <Chip label={filteredUser.name} onDelete={() => handleDeleteFriendClick(filteredUser.id)} /> : <Chip label={filteredUser.name} onClick={() => handleAddFriendClick(filteredUser.id)} />}
+                {isFriend ? <Chip color='primary' label={filteredUser.name} onDelete={() => handleDeleteFriendClick(filteredUser.id)} /> : <Chip color='primary' label={filteredUser.name} onClick={() => handleAddFriendClick(filteredUser.id)} />}
                 <br></br>
             </Container>
             )

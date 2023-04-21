@@ -8,6 +8,7 @@ import EditGroups from './Components/EditGroups'
 import AddRequest from './Components/AddRequest'
 import AddDelUsers from './Components/AddDelUsers'
 import FriendsUsers from './Components/FriendsUsers'
+import Header from './Components/Header'
 
 function App() {
     const [user, setUser] = useState(null)
@@ -44,6 +45,7 @@ function App() {
     <div className='App' >
         <div className='container' >
         <Nav updateUser={updateUser} />
+        <Header />
         <Switch>
             <Route exact path='/' >
                 <Home />

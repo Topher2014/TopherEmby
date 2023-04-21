@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import {Button, ListItem, List, Container, Typography, Chip} from '@mui/material';
+import {Button, ListItem, List, Container, Typography, Chip, TextField} from '@mui/material';
+import { styled } from '@mui/system';
+
+  const EditButton = styled(Button)({
+    margin: '16px 0',
+    fontWeight: 'bold',
+    color: 'white',
+    background: '#2e7d32',
+    '&:hover': {
+      background: '#1b5e20',
+    },
+  });
 
 function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
     const {groupId} = useParams()
@@ -36,7 +47,7 @@ function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
         return (
             <Container key={user.id} >
             <List className='usercard' >
-                <Chip label={user.name} onClick={() => handleAddClick(user.id, groupId)} />
+                <Chip color='primary' label={user.name} onClick={() => handleAddClick(user.id, groupId)} />
             </List>
             </Container>
         )
@@ -52,7 +63,7 @@ function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
             <Container key={thisUser.id} >
                 <List className='usercard' >
                     <ListItem>
-                        <Chip label={thisUser.name} onDelete={() => handleDeleteClick(thisUser.id, groupId)} />
+                        <Chip color='primary' label={thisUser.name} onDelete={() => handleDeleteClick(thisUser.id, groupId)} />
                     </ListItem>
                 </List>
             </Container>
@@ -62,10 +73,16 @@ function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
     function handleClick() {
         setShowFriends((toggle) => !toggle)
     }
-    const buttonText = showFriends ? <Button onClick={handleClick} > Add Friends to Group </Button> : <Button onClick={handleClick} > Remove Friends from Group </Button>
+    const buttonText = showFriends ? <EditButton onClick={handleClick} > Add Friends to Group </EditButton> : <EditButton onClick={handleClick} > Remove Friends from Group </EditButton>
     const renderUsers = showFriends ? removeUsers : addUsers
+    let friendInfo
     const group = groups.filter(group => group.id === parseInt(groupId))
-    const friendInfo = showFriends ? <Typography> These are your friends currently in {group[0].name}. Click to remove. </Typography> : <Typography> These are friends who can be added to {group[0].name}. Click to add.  </Typography>
+    if(groups.length === 0){
+        return null
+    }
+    else{
+     friendInfo = showFriends ? <Typography fontSize={24}> These are your friends currently in {group[0].name}. Click to remove. </Typography> : <Typography fontSize={24}> These are friends who can be added to {group[0].name}. Click to add.  </Typography>
+    }
     return (
         <Container sx={{marginTop: 10}}>
             <Typography> Add/Remove Users to Group</Typography>

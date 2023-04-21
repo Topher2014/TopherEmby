@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react'
 import EnterManually from "./EnterManually"
 import Search from "./Search"
-import {Button, Container, Typography, MenuItem} from '@mui/material';
+import {Button, Container, Typography, MenuItem, TextField} from '@mui/material';
+import { styled } from '@mui/system';
+
+  const GroupButton = styled(Button)({
+    margin: '0 16px',
+    fontWeight: 'bold',
+  });
 
 function AddRequest({groups, fetchGroups, user}) {
     const [showManual, setShowManual] = useState(false)
@@ -15,11 +21,11 @@ function AddRequest({groups, fetchGroups, user}) {
     function handleClick() {
         setShowManual(toggle => !toggle)
     }
-    const buttonText = showManual ? <Button onClick={handleClick} > Search </Button> : <Button onClick={handleClick} > Don't see what you're looking for? Enter it manually! </Button> 
+    const buttonText = showManual ? <Button sx={{marginTop: '-110px'}} onClick={handleClick} > Click here to search instead </Button> : <Button onClick={handleClick} > Don't see what you're looking for? Click here to enter it manually! </Button> 
     const requestMethod = showManual ? <EnterManually buttonText={buttonText} groupOptions={groupOptions} /> : <Search buttonText={buttonText} groupOptions={groupOptions} /> 
     return (
         <Container sx={{marginTop: 10}} >
-            <Typography> Add Request </Typography>
+            <Typography > Add Request </Typography>
             {requestMethod}
             <br></br>
         </Container>

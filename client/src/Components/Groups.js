@@ -1,63 +1,94 @@
 import { useEffect, useState } from 'react'
-import {useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Requests from './Requests'
 import GroupUsers from './GroupUsers'
-import {Button, List, Container, Box, Typography} from '@mui/material';
+import { Button, List, Container, Box, Typography, MenuItem, TextField } from '@mui/material';
+import { styled } from '@mui/system';
 
-function Groups({groups, fetchGroups, user}){
-    useEffect(() => {fetchGroups()}, [])
-    const [groupID, setGroupID] = useState(null)
-    const [showUsers, setShowUsers] = useState(null)
-    const [initial, setInitial] = useState(true)
-    const history = useHistory()
-    function handleClick() {
-        fetchGroups()
-        setShowUsers((toggle) => !toggle)
-    }
-    const users = groups.map(mappedGroups => mappedGroups.groupuser).flat().filter(filteredGroups => filteredGroups.group_id === groupID).map(group => group.users)
-    const buttonText = showUsers ? <Button onClick={handleClick} > Show Requests </Button> : <Button onClick={handleClick} > Show Users </Button>
-    const initalButtonText = !initial ? buttonText : null
-    const renderInfo = showUsers ? <GroupUsers users={users} user={user} /> : <Requests groupID={groupID} /> 
-    const initialRenderInfo = !initial ? renderInfo : null
+  const EditButton = styled(Button)({
+    margin: '16px 0',
+    fontWeight: 'bold',
+    color: 'white',
+    background: '#2e7d32',
+    '&:hover': {
+      background: '#1b5e20',
+    },
+  });
+  
+  const SelectBox = styled(TextField)({
+    margin: '16px 0',
+  });
 
-    const renderGroups = groups.map(mappedGroups => mappedGroups.groupuser).flat().filter(filteredGroups => filteredGroups.user_id === user.id).map(group => {
+function Groups({ groups, fetchGroups, user }) {
+  useEffect(() => {
+    fetchGroups()
+  }, [])
 
-        return (
-            <Container key={group.groups.id} >
-            <List className='groupcard' >
-                <Button onClick={() => {setGroupID(group.groups.id); setInitial(false)}} > {group.groups.name} </Button>
-            </List>
-            </Container>
-            )
+  const [groupID, setGroupID] = useState(null)
+  const [showUsers, setShowUsers] = useState(null)
+  const [initial, setInitial] = useState(true)
+  const [label, setLabel] = useState('Select a group...')
+  const history = useHistory()
+
+  function handleClick() {
+    fetchGroups()
+    setShowUsers((toggle) => !toggle)
+  }
+
+  const users = groups
+    .map((mappedGroups) => mappedGroups.groupuser)
+    .flat()
+    .filter((filteredGroups) => filteredGroups.group_id === groupID)
+    .map((group) => group.users)
+
+  const buttonText = showUsers ? (
+    <Button onClick={handleClick}>Show Requests</Button>
+  ) : (
+    <Button onClick={handleClick}>Show Users</Button>
+  )
+
+  const initalButtonText = !initial ? buttonText : null
+
+  const renderInfo = showUsers ? (
+    <GroupUsers users={users} user={user} />
+  ) : (
+    <Requests groupID={groupID} />
+  )
+
+  const initialRenderInfo = !initial ? renderInfo : null
+
+  const renderGroups = groups
+    .map((mappedGroups) => mappedGroups.groupuser)
+    .flat()
+    .filter((filteredGroups) => filteredGroups.user_id === user.id)
+    .map((group) => {
+      return (
+        <MenuItem
+          key={group.groups.id}
+          onClick={() => {
+            setGroupID(group.groups.id)
+            setInitial(false)
+            setLabel(group.groups.name)
+          }}
+        >
+          {group.groups.name}
+        </MenuItem>
+      )
     })
 
-    return (
-        <Container sx={{ 
-            // ml: 50, 
-            // bgcolor: 'red',
-            // borderRadius: '555%',
-            // width: 15,
-            // height: 25,
-            // display: 'flex',
-            // position: 'absolute',
-            // zIndex: 'modal',
-            // bottom: 0,
-            // alignItems:'center',
-            // justifyContent: 'center'               
-        //   }}
-            // marginTop: 8,
-            // display: 'flex',
-            // flexDirection: 'column',
-            // alignItems: 'center',
-        }}>
-        <br></br>
-            <Typography sx={{marginTop: 8}}>Groups</Typography>
-            <Button  onClick={() => history.push('/editgroups')} > Edit Groups </Button>
-            {initalButtonText}
-            <Box className='groupscontainer'> {renderGroups} </Box>
-            {initialRenderInfo}
-        </Container>
-    )
+  return (
+    <Container sx={{marginTop: 10}} >
+      <Typography >Groups</Typography>
+      <EditButton onClick={() => history.push('/editgroups')}>
+        Edit Groups
+      </EditButton>
+      <SelectBox label={label} select name="group_id" fullWidth>
+        {renderGroups}
+      </SelectBox>
+      {initalButtonText}
+      {initialRenderInfo}
+    </Container>
+  )
 }
 
 export default Groups
