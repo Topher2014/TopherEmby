@@ -1,5 +1,10 @@
-import { useState } from 'react'
-import { NavLink, useHistory } from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
+// import Button from '@mui/material/Button';
+// import Container from '@mui/material/Container';
+import {List, AppBar, Toolbar, Button, Box, Container} from '@mui/material'
+import index from '../index.js'
+import {palette, theme} from '@mui/system'
+import TopherEmby from '../Images/TopherEmby.png'
 
 function Nav({updateUser}) {
     const history = useHistory()
@@ -15,16 +20,19 @@ function Nav({updateUser}) {
     }
 
     return (
-        <nav className = 'navigation'>
-            <NavLink className='brand-name' exact to='/'>
-                <strong> Topher Emby </strong>
-            </NavLink>
-            <ul>
-                <li onClick={handleLogout}> <NavLink exact to='/logout'> Logout </NavLink> </li>
-                <li> <NavLink exact to='/groups'> Groups </NavLink> </li>
-                <li> <NavLink to='/addrequest'> Add Request </NavLink> </li>
-            </ul>
-        </nav>
+        <Box sx={{bgcolor: 'primary.secondary'}}>
+        {/* // <Container > */}
+         {/* <Container sx={{color:'#282828'}}> */}
+            <AppBar position='sticky' sx={{marginTop: 2}}>
+            <Toolbar sx={{justifyContent: 'flex-end'}} >
+            <Button sx={{color: 'primary.contrastText', marginRight: '40%'}} startIcon={<img src={TopherEmby}/>} onClick={() => history.push('/')} > </Button>
+                <Button sx={{color: 'primary.contrastText', marginRight: '0px'}} onClick={() => history.push('/groups')} >  Groups </Button>
+                <Button sx={{color: 'primary.contrastText', marginRight: '0px'}} onClick={() => history.push('/addrequest')} >  Add Request </Button>
+                <Button sx={{color: 'primary.contrastText', marginLeft: '0px'}} onClick={() => history.push('/friendsusers')} >  Friends/Users </Button>
+                <Button sx={{color: 'primary.contrastText', marginLeft: '0px'}} onClick={handleLogout} >  Logout  </Button>
+            </Toolbar> 
+            </AppBar>
+        </Box>
     )
 }
 

@@ -1,31 +1,64 @@
-import { useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
+// import {ListItem, List, Container, Typography} from '@mui/material';
+import { Container, Typography, List, ListItem, Box, Chip } from '@mui/material';
 
-function Requests() {
-    const {groupId} = useParams()
-    const [requests, setRequests] = useState([])
-    
-    useEffect(() => {
-        fetch(`/groups/${groupId}/requests`).then(res => res.json()).then(data => setRequests(data))
-    }, [groupId])
-    const renderRequests = requests.map((request) => {
-        return (
-            <div key={request.id} >
-                <ul className='requestcard' >
-                    <li>
-                        <h4> {request.type} {request.name} {request.quality} </h4>
-                    </li>
-                </ul>
-            </div>
-        )
-    })
+function Requests({ groupID }) {
+  const [requests, setRequests] = useState([]);
 
+  useEffect(() => {
+    if (groupID)
+      fetch(`/groups/${groupID}/requests`)
+        .then((res) => res.json())
+        .then((data) => setRequests(data));
+  }, [groupID]);
+
+  function handleDeleteClick(id){
+    console.log(id)
+      fetch(`/deleterequest`, {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({id: id}),
+      })
+          window.location.reload(true)
+  }
+
+  const renderRequests = requests.map((request) => {
+    let type = '';
+    if (request.type === 'movie') {
+      type = request.type.charAt(0).toUpperCase() + request.type.slice(1);
+    } else if (request.type === 'tv') {
+      type = 'Show';
+    }
     return (
-        <div>
-        <h1> Requests </h1>
-        <h4> {renderRequests} </h4>
-        </div>
-    )
+      <ListItem key={request.id}>
+        <ListItem>
+          {/* <Typography fontSize={14}> {type} {request.name} {request.quality} {request.imdb_id} <Chip label='Remove'  onDelete={handleDeleteClick} ></Chip></Typography> */}
+         {/* <Chip >  {type} {request.name} {request.quality} {request.imdb_id} </Chip>  */}
+         <Chip label={`${type} ${request.name} ${request.quality} ${request.imdb_id}`} onDelete={() => handleDeleteClick(request.id)}/>
+
+        </ListItem>
+      </ListItem>
+    );
+  });
+
+  return (
+    <Container>
+      <Typography fontSize={24}>
+        Requests
+      </Typography>
+      {requests.length > 0 ? (
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+          {renderRequests}
+        </List>
+      ) : (
+        <Box sx={{ mt: 2 }}>
+          <Typography>No requests found.</Typography>
+        </Box>
+      )}
+    </Container>
+  );
 }
 
-export default Requests
+export default Requests;

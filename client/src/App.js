@@ -6,14 +6,20 @@ import { Switch, Route } from 'react-router-dom'
 import Groups from './Components/Groups'
 import EditGroups from './Components/EditGroups'
 import AddRequest from './Components/AddRequest'
-import AddUsers from './Components/AddUsers'
+import AddDelUsers from './Components/AddDelUsers'
+import FriendsUsers from './Components/FriendsUsers'
+import Header from './Components/Header'
 
 function App() {
     const [user, setUser] = useState(null)
     const [groups, setGroups] = useState([])
+    const [users, setUsers] = useState([])
 
     const fetchGroups = () => (
         fetch('/groups').then(res => res.json()).then(data => setGroups(data))
+    )
+    const fetchUsers = () => (
+        fetch('/users').then(res => res.json()).then(data => setUsers(data))
     )
 
     useEffect(() => {
@@ -39,6 +45,7 @@ function App() {
     <div className='App' >
         <div className='container' >
         <Nav updateUser={updateUser} />
+        <Header />
         <Switch>
             <Route exact path='/' >
                 <Home />
@@ -49,14 +56,17 @@ function App() {
             <Route path='/groups'>
                 <Groups groups={groups} fetchGroups={fetchGroups} user={user} />
             </Route>
-            <Route exact path={`/editgroups`} >
-                <EditGroups groups={groups} fetchGroups={fetchGroups} setGroups={setGroups} />
+            <Route path={`/editgroups`} >
+                <EditGroups groups={groups} fetchGroups={fetchGroups} setGroups={setGroups} user={user} />
             </Route>
             <Route path={`/addrequest`} >
-                <AddRequest groups={groups} fetchGroups={fetchGroups} />
+                <AddRequest groups={groups} fetchGroups={fetchGroups} user={user} />
             </Route>
-            <Route path={`/addusers/:groupId`} >
-                <AddUsers />
+            <Route path={`/addremoveusers/:groupId`} >
+                <AddDelUsers users={users} fetchUsers={fetchUsers} user={user} groups={groups} fetchGroups={fetchGroups} />
+            </Route>
+            <Route path={`/friendsusers`} >
+                <FriendsUsers user={user} users={users} fetchUsers={fetchUsers} />
             </Route>
         </Switch>
         </div>

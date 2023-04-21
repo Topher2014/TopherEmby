@@ -43,3 +43,50 @@ https://github.com/BrettdeBear/SENG-LIVE-Phase-4-flask-010923/blob/main/06-Auth-
 
 // window.location.reload()
 const mappedUsers = groups.map(group => group.groupuser.map(groupuser => groupuser.users))
+//
+
+search while typing
+function Search() {
+  const [movies, setMovies] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchInput, setSearchInput] = useState('');
+
+  function searchMovies() {
+    fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=a09c757d39c1b519b0f90f145b75e716&query=${searchTerm}`
+    )
+      .then((res) => res.json())
+      .then((data) => setMovies(data));
+    console.log(movies)
+  }
+    // fetch('https://api.themoviedb.org/3/search/movie?api_key=a09c757d39c1b519b0f90f145b75e716&query=Jack+Reacher')
+
+  useEffect(() => {
+    if (searchTerm) {
+      searchMovies();
+    }
+  }, [searchTerm]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSearchTerm(searchInput);
+  };
+
+  return (
+    <div>
+      <h1>Search</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          placeholder="Search for a movie..."
+        />
+        <button type="submit">Search</button>
+      </form>
+      {/* Render movies here */}
+    </div>
+  );
+}
+
+export default Search;

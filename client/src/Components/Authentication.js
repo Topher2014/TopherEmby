@@ -1,8 +1,13 @@
 import React, {useState} from 'react'
-import styled from 'styled-components'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import {useHistory} from 'react-router-dom'
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 
 function Authentication({updateUser}) {
     const [error, setError] = useState(false)
@@ -12,16 +17,18 @@ function Authentication({updateUser}) {
     const handleClick = () => setSignUp((signUp) => !signUp)
     const formSchema = yup.object().shape({
         name: yup.string().required("Please enter a user name"),
-        email: yup.string().email()
+        password: yup.string().required('Please enter your password'),
+        email: yup.string().email('Please enter a valid email')
       })
 
-    const formik = useFormik({
+    const form = useFormik({
         initialValues: {
             name:'',
             email:'',
             password:''
         },
         validationSchema: formSchema,
+        validateOnChange:false,
         onSubmit: (values) => {
             fetch(signUp?'/adduser':'/login',{
               method: "POST",
@@ -37,7 +44,6 @@ function Authentication({updateUser}) {
                   history.push('/')
                 })
               } else {
-                //15.2 render the error if the user's authentication fails
                 res.json().then(error => setError(error.message))
               }
             })
@@ -45,52 +51,68 @@ function Authentication({updateUser}) {
         },
     })
     return (
-        <> 
-        <h2 style={{color:'red'}}> {formik.errors.name}</h2>
-        {error&& <h2 style={{color:'red'}}> {error}</h2>}
-        <h2>Please Log in or Sign up!</h2>
-        <h2>{signUp?'Have an account?':'Not a member yet?'}</h2>
-        <button onClick={handleClick}>{signUp?'Log In':'Signup'}</button>
-        <Form onSubmit={formik.handleSubmit}>
-        <label>
-          Username
-          </label>
-        <input type='text' name='name' value={formik.values.name} onChange={formik.handleChange} />
-        <label>
-           Password
-           </label>
-           <input type='password' name='password' value={formik.values.password} onChange={formik.handleChange} />
-        {signUp&&(
-          <>
-          <label>
-          Email
-          </label>
-          <input type='text' name='email' value={formik.values.email} onChange={formik.handleChange} />
-           
-           </>
-        )}
-        <input type='submit' value={signUp?'Sign Up!':'Log In!'} />
-      </Form>
-        </>
+        <Container
+           sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+          {error&& <h2 style={{color:'red'}} > {error}</h2>}
+          <Typography > Please Log in or Sign up! </Typography>
+          <Typography> {signUp?'Have an account?':'Not a member yet?'} </Typography>
+          <Button variant='contained'  onClick={handleClick}>
+          {signUp?'Log In':'Signup'}
+          </Button>
+          <Grid container spacing={2} justifyContent='center' >
+            <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}component='form' onSubmit={form.handleSubmit}>
+              <Grid>
+              <TextField
+                type='text'
+                name="name"
+                label="Username"
+                value={form.values.name}
+                onChange={form.handleChange}
+                sx={{ width: 'calc(120% - 10px)' }}
+                error={form.touched.name && Boolean(form.errors.name)}
+                helperText={form.touched.name && form.errors.name}
+              />
+              </Grid>
+              <Grid>
+              <TextField
+                type='password'
+                name="password"
+                label="Password"
+                value={form.values.password}
+                onChange={form.handleChange}
+                sx={{ width: 'calc(120% - 10px)' }}
+                error={form.touched.password && Boolean(form.errors.password)}
+                helperText={form.touched.password && form.errors.password}
+              />
+              </Grid>
+            {signUp&&(
+              <Grid>
+              <TextField
+                type='text'
+                name="email"
+                label="Email"
+                value={form.values.email}
+                onChange={form.handleChange}
+                sx={{ width: 'calc(120% - 10px)' }}
+                error={form.touched.email && Boolean(form.errors.email)}
+                helperText={form.touched.email && form.errors.email}
+              />
+              </Grid>
+            )}
+            <Grid>
+            <Button type='submit'   > {signUp?'Sign Up!':'Log In!'} </Button>
+            </Grid>
+            </Box>
+          </Grid>
+        </Container>
+
     )
 }
 
 export default Authentication
-
-export const Form = styled.form`
-display:flex;
-flex-direction:column;
-width: 400px;
-margin:auto;
-font-family:Arial;
-font-size:30px;
-input[type=submit]{
-  background-color:#42ddf5;
-  color: white;
-  height:40px;
-  font-family:Arial;
-  font-size:30px;
-  margin-top:10px;
-  margin-bottom:10px;
-}
-`

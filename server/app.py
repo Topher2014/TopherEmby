@@ -1,7 +1,7 @@
 from flask import Flask, make_response, request, session, abort, jsonify
 from flask_restful import Api, Resource
 from config import db, app, Api
-from models import User, Group, GroupUser, Request
+from models import User, Group, GroupUser, Request, Friendship
 from werkzeug.exceptions import NotFound, Unauthorized
 
 @app.route('/')
@@ -87,6 +87,18 @@ class GroupUsers(Resource):
             201
         )
         return response
+    def delete(self):
+        data = request.get_json()
+        print(data)
+        groupuser = GroupUser.query.filter_by(group_id=data['group_id'], user_id=data['user_id']).first()
+        print(groupuser)
+        if not data:
+            return make_response({
+                "errors": "User not found"
+            }, 404)
+        db.session.delete(groupuser)
+        db.session.commit()
+        return make_response('deleted', 200)
 api.add_resource(GroupUsers, '/groupusers') 
 
 class AddUser(Resource):
@@ -108,14 +120,20 @@ class Login(Resource):
     def post(self):
         try: 
             user = User.query.filter_by(name=request.get_json()['name']).first()
+            # print(user)
+            # print(user.name)
+            # print(user.password)
+            # print(request)
             if user.authenticate(request.get_json()['password']):
+                # print(password)
                 session['user_id'] = user.id
                 response = make_response(
                     user.to_dict(),
                     200
                 )
                 return response
-        except:
+        except Exception as e:
+            print(str(e))
             abort(401, "Incorrect Username or Password")
 api.add_resource(Login, '/login')
 
@@ -147,7 +165,8 @@ class Requests(Resource):
             type = data['type'],
             quality = data['quality'],
             group_id = data['group_id'],
-            user_id = session['user_id']
+            user_id = session['user_id'],
+            imdb_id = data['imdb_id']
         )
         db.session.add(new_request)
         db.session.commit()
@@ -169,6 +188,44 @@ class RequestsByID(Resource):
         )
         return response
 api.add_resource(RequestsByID, '/groups/<int:id>/requests')
+
+class Friendships(Resource):
+    def get(self):
+        try:
+            friendships = [f.to_dict(rules=('friend_id',)) for f in Friendship.query.all()]
+            return make_response(friendships, 200)
+        except Exception as e:
+            abort(404, [e.__str__()])
+    def post(self):
+        data = request.get_json()
+        friendship = Friendship(
+            user_id = data['user_id'],
+            friend_id = data['friend_id']
+        )
+        friendship_reverse = Friendship(
+            user_id = data['friend_id'],
+            friend_id = data['user_id']
+        )
+        db.session.add(friendship)
+        db.session.add(friendship_reverse)
+        db.session.commit()
+        response = make_response(friendship.to_dict(), 201)
+        return response
+    def delete(self):
+        data = request.get_json()
+        friendship = Friendship.query.filter_by(
+            user_id = data['user_id'],
+            friend_id = data['friend_id']
+        ).first()
+        friendship_reverse = Friendship.query.filter_by(
+            user_id = data['friend_id'],
+            friend_id = data['user_id']
+        ).first()
+        db.session.delete(friendship)
+        db.session.delete(friendship_reverse)
+        db.session.commit()
+        return make_response('', 204)
+api.add_resource(Friendships, '/friendships')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
