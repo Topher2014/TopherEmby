@@ -1,4 +1,4 @@
-import { ListItem, List, Container, Typography, Button } from '@mui/material';
+import { ListItem, List, Container, Typography, Button, Chip } from '@mui/material';
 import { styled } from '@mui/system';
 
 function GroupUsers({ users, user }) {
@@ -10,9 +10,9 @@ function GroupUsers({ users, user }) {
     }
 
     return (
-      <Container key={thisUser.id}>
-            <ListItem>{thisUser.name}</ListItem>
-      </Container>
+      <List key={thisUser.id}>
+              <Chip  label={thisUser.name}/>
+      </List>
     );
   });
 

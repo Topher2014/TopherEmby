@@ -32,14 +32,9 @@ function Requests({ groupID }) {
       type = 'Show';
     }
     return (
-      <ListItem key={request.id}>
-        <ListItem>
-          {/* <Typography fontSize={14}> {type} {request.name} {request.quality} {request.imdb_id} <Chip label='Remove'  onDelete={handleDeleteClick} ></Chip></Typography> */}
-         {/* <Chip >  {type} {request.name} {request.quality} {request.imdb_id} </Chip>  */}
+      <List key={request.id}>
          <Chip label={`${type} ${request.name} ${request.quality} ${request.imdb_id}`} onDelete={() => handleDeleteClick(request.id)}/>
-
-        </ListItem>
-      </ListItem>
+      </List>
     );
   });
 
