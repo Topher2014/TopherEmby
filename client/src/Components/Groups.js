@@ -20,9 +20,9 @@ import { styled } from '@mui/system';
   });
 
 function Groups({ groups, fetchGroups, user }) {
-  // eslint-disable-next-line
   useEffect(() => {
     fetchGroups()
+  // eslint-disable-next-line
   }, [])
 
   const [groupID, setGroupID] = useState(null)

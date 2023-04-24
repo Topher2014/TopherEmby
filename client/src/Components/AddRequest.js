@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import EnterManually from "./EnterManually"
 import Search from "./Search"
 import {Button, Container, Typography, MenuItem} from '@mui/material';
-import { styled } from '@mui/system';
 
 function AddRequest({groups, fetchGroups, user}) {
     const [showManual, setShowManual] = useState(false)
