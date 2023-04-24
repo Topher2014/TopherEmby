@@ -14,7 +14,7 @@ app = Flask(
 
 app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://topher:d6fDCYYJpwuQvfkWWpEProTaFNVOIU1I@dpg-ch12620rddl13a4vun50-a.oregon-postgres.render.com/topher_emby'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://my_database_yh1l_user:U3hSZt2XBNOgl3F8ck2p9qLfsdfUPa9K@dpg-ch3ffeaut4m1v1sq26j0-a.oregon-postgres.render.com/my_database_yh1l'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
