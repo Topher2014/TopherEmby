@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import {Button, ListItem, List, Container, Typography, Chip, TextField} from '@mui/material';
+import {Button, ListItem, List, Container, Typography, Chip} from '@mui/material';
 import { styled } from '@mui/system';
 
   const EditButton = styled(Button)({
@@ -15,6 +15,7 @@ import { styled } from '@mui/system';
 
 function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
     const {groupId} = useParams()
+    // eslint-disable-next-line
     useEffect(() => {fetchUsers(); fetchGroups()}, [])
 
     function handleAddClick(user_id, group_id){

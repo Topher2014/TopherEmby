@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
   Button,
-  ListItem,
   List,
   Container,
   Box,
@@ -16,12 +15,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { styled } from '@mui/system';
 
-const GroupTitle = styled(Typography)({
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  });
-  
   const EditButton = styled(Button)({
     margin: '16px 0',
     fontWeight: 'bold',
@@ -31,15 +24,6 @@ const GroupTitle = styled(Typography)({
       background: '#1b5e20',
     },
   });
-  
-  const SelectBox = styled(TextField)({
-    margin: '16px 0',
-  });
-  
-  const GroupButton = styled(Button)({
-    margin: '0 16px',
-    fontWeight: 'bold',
-  });
 
 const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
   const history = useHistory();
@@ -48,6 +32,7 @@ const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
     name: yup.string().required('Enter group name'),
   });
 
+  // eslint-disable-next-line
   useEffect(() => {
     fetchGroups();
   }, []);

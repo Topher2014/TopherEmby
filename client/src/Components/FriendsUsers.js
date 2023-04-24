@@ -13,6 +13,7 @@ const EditButton = styled(Button)({
 });
 
 function FriendsUsers({user, users, fetchUsers}) {
+    // eslint-disable-next-line
     useEffect(() => {fetchUsers()}, [])
     const [filteredUsers, setFilteredUsers] = useState([])
     useEffect(() => {setFilteredUsers(users)}, [users])

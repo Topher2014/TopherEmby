@@ -1,5 +1,4 @@
-import { ListItem, List, Container, Typography, Button, Chip } from '@mui/material';
-import { styled } from '@mui/system';
+import {List, Container, Typography, Chip} from '@mui/material';
 
 function GroupUsers({ users, user }) {
   console.log(users);

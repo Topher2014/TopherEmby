@@ -1,9 +1,6 @@
 import {useHistory} from 'react-router-dom'
 // import Button from '@mui/material/Button';
-// import Container from '@mui/material/Container';
-import {List, AppBar, Toolbar, Button, Box, Container} from '@mui/material'
-import index from '../index.js'
-import {palette, theme} from '@mui/system'
+import {AppBar, Toolbar, Button, Box} from '@mui/material'
 import TopherEmby from '../Images/TopherEmby.png'
 
 function Nav({updateUser}) {
@@ -21,8 +18,6 @@ function Nav({updateUser}) {
 
     return (
         <Box sx={{bgcolor: 'primary.secondary'}}>
-        {/* // <Container > */}
-         {/* <Container sx={{color:'#282828'}}> */}
             <AppBar position='sticky' sx={{marginTop: 2}}>
             <Toolbar sx={{justifyContent: 'flex-end'}} >
             <Button sx={{color: 'primary.contrastText', marginRight: '40%'}} startIcon={<img src={TopherEmby}/>} onClick={() => history.push('/')} > </Button>

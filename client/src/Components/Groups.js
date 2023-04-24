@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Requests from './Requests'
 import GroupUsers from './GroupUsers'
-import { Button, List, Container, Box, Typography, MenuItem, TextField } from '@mui/material';
+import { Button, Container, Typography, MenuItem, TextField } from '@mui/material';
 import { styled } from '@mui/system';
 
   const EditButton = styled(Button)({
@@ -20,6 +20,7 @@ import { styled } from '@mui/system';
   });
 
 function Groups({ groups, fetchGroups, user }) {
+  // eslint-disable-next-line
   useEffect(() => {
     fetchGroups()
   }, [])

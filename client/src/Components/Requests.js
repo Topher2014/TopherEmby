@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react'
-// import {ListItem, List, Container, Typography} from '@mui/material';
-import { Container, Typography, List, ListItem, Box, Chip } from '@mui/material';
+import { Container, Typography, List, Box, Chip } from '@mui/material';
 
 function Requests({ groupID }) {
   const [requests, setRequests] = useState([]);
