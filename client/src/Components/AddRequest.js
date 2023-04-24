@@ -1,16 +1,12 @@
 import { useState, useEffect } from 'react'
 import EnterManually from "./EnterManually"
 import Search from "./Search"
-import {Button, Container, Typography, MenuItem, TextField} from '@mui/material';
+import {Button, Container, Typography, MenuItem} from '@mui/material';
 import { styled } from '@mui/system';
-
-  const GroupButton = styled(Button)({
-    margin: '0 16px',
-    fontWeight: 'bold',
-  });
 
 function AddRequest({groups, fetchGroups, user}) {
     const [showManual, setShowManual] = useState(false)
+    // eslint-disable-next-line
     useEffect(() => {fetchGroups()}, [])
     const groupOptions = groups.map(mappedGroups => mappedGroups.groupuser).flat().filter(filteredGroups => filteredGroups.user_id === user.id).map(group => {
         return (

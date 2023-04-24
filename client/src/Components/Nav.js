@@ -20,7 +20,7 @@ function Nav({updateUser}) {
         <Box sx={{bgcolor: 'primary.secondary'}}>
             <AppBar position='sticky' sx={{marginTop: 2}}>
             <Toolbar sx={{justifyContent: 'flex-end'}} >
-            <Button sx={{color: 'primary.contrastText', marginRight: '40%'}} startIcon={<img src={TopherEmby}/>} onClick={() => history.push('/')} > </Button>
+            <Button sx={{color: 'primary.contrastText', marginRight: '40%'}} startIcon={<img src={TopherEmby} alt={'TopherEmby'}/>} onClick={() => history.push('/')} > </Button>
                 <Button sx={{color: 'primary.contrastText', marginRight: '0px'}} onClick={() => history.push('/groups')} >  Groups </Button>
                 <Button sx={{color: 'primary.contrastText', marginRight: '0px'}} onClick={() => history.push('/addrequest')} >  Add Request </Button>
                 <Button sx={{color: 'primary.contrastText', marginLeft: '0px'}} onClick={() => history.push('/friendsusers')} >  Friends/Users </Button>

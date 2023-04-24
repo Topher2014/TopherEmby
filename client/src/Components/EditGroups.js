@@ -32,9 +32,9 @@ const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
     name: yup.string().required('Enter group name'),
   });
 
-  // eslint-disable-next-line
   useEffect(() => {
     fetchGroups();
+  // eslint-disable-next-line
   }, []);
 
   const handleDelete = (id) => {
