@@ -1,17 +1,6 @@
-import { useFormik } from 'formik';
+import {useFormik} from 'formik';
 import * as yup from 'yup';
-import { Container, Box, TextField, Button, MenuItem,} from '@mui/material';
-import { styled } from '@mui/system';
-
-const EditButton = styled(Button)({
-  margin: '16px 0',
-  fontWeight: 'bold',
-  color: 'white',
-  background: '#2e7d32',
-  '&:hover': {
-    background: '#1b5e20',
-  },
-});
+import {Container, Box, TextField, Button, MenuItem} from '@mui/material';
 
 function EnterManually({ buttonText, groupOptions }) {
   const formSchema = yup.object().shape({
@@ -101,13 +90,14 @@ function EnterManually({ buttonText, groupOptions }) {
         >
           {groupOptions}
         </TextField>
-        <EditButton
+        <Button
+          variant='contained'
           className="button-30"
           type="submit"
           sx={{ mt: '16px', ml: 'auto' }}
         >
           Submit
-        </EditButton>
+        </Button>
       </Box>
       <Box sx={{ mt: '16px' }}>{buttonText}</Box>
       </Container>

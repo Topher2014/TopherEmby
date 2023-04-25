@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import {useHistory} from 'react-router-dom'
@@ -9,21 +9,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-function Authentication({updateUser, setUser}) {
+function Authentication({updateUser}) {
     const [error, setError] = useState(false)
     const [signUp, setSignUp] = useState(false)
     const history = useHistory()
-
-    useEffect(() => {
-        fetch('/dbauthorized')
-        .then(response => {
-            if(response.ok) {
-                response.json().then(user => setUser(user))
-            } else {
-                setUser(null)
-            }
-        })
-    }, [])
 
     const handleClick = () => setSignUp((signUp) => !signUp)
     const formSchema = yup.object().shape({
@@ -71,10 +60,9 @@ function Authentication({updateUser, setUser}) {
                 justifyContent: 'center'
             }}>
           {error&& <h2 style={{color:'red'}} > {error}</h2>}
-          <Typography > Please Log in or Sign up! </Typography>
-          <Typography> {signUp?'Have an account?':'Not a member yet?'} </Typography>
-          <Button variant='contained'  onClick={handleClick}>
-          {signUp?'Log In':'Signup'}
+          <Typography > {signUp?'Welcome! Create an account to get started!':''} </Typography>
+          <Button  onClick={handleClick}>
+          {signUp?'Already have an account? Click here to sign in instead!':'First time visiting? Click here to sign up!'}
           </Button>
           <Grid container spacing={2} justifyContent='center' >
             <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}component='form' onSubmit={form.handleSubmit}>
@@ -117,7 +105,7 @@ function Authentication({updateUser, setUser}) {
               </Grid>
             )}
             <Grid>
-            <Button type='submit'   > {signUp?'Sign Up!':'Log In!'} </Button>
+            <Button variant='contained' type='submit' > {signUp?'Sign Up!':'Log In!'} </Button>
             </Grid>
             </Box>
           </Grid>

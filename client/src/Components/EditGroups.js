@@ -1,29 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useHistory} from 'react-router-dom';
-import { useFormik } from 'formik';
+import {useState, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
+import {useFormik} from 'formik';
 import * as yup from 'yup';
-import {
-  Button,
-  List,
-  Container,
-  Box,
-  TextField,
-  Typography,
-  Chip, Divider, CircularProgress
-} from '@mui/material';
+import {Button, List, Container, Box, TextField, Typography, Chip, Divider, CircularProgress} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { styled } from '@mui/system';
-
-  const EditButton = styled(Button)({
-    margin: '16px 0',
-    fontWeight: 'bold',
-    color: 'white',
-    background: '#2e7d32',
-    '&:hover': {
-      background: '#1b5e20',
-    },
-  });
 
 const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
   const history = useHistory();
@@ -125,14 +106,14 @@ const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
               onChange={formik.handleChange}
             />
             <Box sx={{ ml: 1 }}>
-              <EditButton
+              <Button
                 type='submit'
                 variant='contained'
                 disabled={loading}
                 size='large'
               >
                 Add Group
-              </EditButton>
+              </Button>
             </Box>
           </Box>
        

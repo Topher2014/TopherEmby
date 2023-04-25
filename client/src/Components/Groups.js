@@ -1,23 +1,8 @@
-import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import {useEffect, useState} from 'react'
+import {useHistory} from 'react-router-dom'
 import Requests from './Requests'
 import GroupUsers from './GroupUsers'
-import { Button, Container, Typography, MenuItem, TextField } from '@mui/material';
-import { styled } from '@mui/system';
-
-  const EditButton = styled(Button)({
-    margin: '16px 0',
-    fontWeight: 'bold',
-    color: 'white',
-    background: '#2e7d32',
-    '&:hover': {
-      background: '#1b5e20',
-    },
-  });
-  
-  const SelectBox = styled(TextField)({
-    margin: '16px 0',
-  });
+import {Button, Container, Typography, MenuItem, TextField} from '@mui/material';
 
 function Groups({ groups, fetchGroups, user }) {
   useEffect(() => {
@@ -81,12 +66,12 @@ function Groups({ groups, fetchGroups, user }) {
   return (
     <Container sx={{marginTop: 10}} >
       <Typography >Groups</Typography>
-      <EditButton onClick={() => history.push('/editgroups')}>
+      <Button variant='contained' onClick={() => history.push('/editgroups')}>
         Edit Groups
-      </EditButton>
-      <SelectBox label={label} select name="group_id" fullWidth>
+      </Button>
+      <TextField label={label} select name="group_id" fullWidth>
         {renderGroups}
-      </SelectBox>
+      </TextField>
       {initalButtonText}
       {initialRenderInfo}
     </Container>

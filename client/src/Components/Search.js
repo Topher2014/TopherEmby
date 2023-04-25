@@ -1,18 +1,7 @@
-import { useState } from 'react';
-import { useFormik } from 'formik'
+import {useState} from 'react';
+import {useFormik} from 'formik'
 import * as yup from 'yup'
 import {Button, Card, Container, Box, TextField, Typography, MenuItem, ImageList, ImageListItem} from '@mui/material';
-import { styled } from '@mui/system';
-
-const EditButton = styled(Button)({
-  margin: '16px 0',
-  fontWeight: 'bold',
-  color: 'white',
-  background: '#2e7d32',
-  '&:hover': {
-    background: '#1b5e20',
-  },
-});
 
 function Search({buttonText, groupOptions}) {
   const initialValue = 'Searching...'
@@ -22,12 +11,16 @@ function Search({buttonText, groupOptions}) {
   const [retrievedData, setRetrievedData] = useState([])
 
   const formSchema = yup.object().shape({
-          name: yup.string().required('Enter a name, dummy!'),
-          type: yup.string().required('You really should add a type, dummy!'),
-          quality: yup.string().required('You really should add a quality, dummy!'),
-          group_id: yup.number().required('Choose a group, dummy!'),
-          // searachterm: yup.number().required('Choose a name, dummy!')
+    name: yup
+      .string()
+      .test('not-equal-to-initial-value', 'You need to search for something, dummy!', function (value) {
+        return value !== initialValue
       })
+      .required(),
+    quality: yup.string().required('You really should add a quality, dummy!'),
+    group_id: yup.number().required('Choose a group, dummy!'),
+  })
+
   const form = useFormik({ 
       enableReinitialize:true,
       initialValues: {
@@ -113,7 +106,7 @@ function Search({buttonText, groupOptions}) {
     return (
     <Container>
     <Box component='form' className='requestform' onSubmit={form.handleSubmit}>
-    <TextField disabled label={selectedProgram} style={{width: '40%'}} > {selectedProgram} </TextField>
+    <TextField disabled name='name' label={selectedProgram} error={form.touched.name && Boolean(form.errors.name)} helperText={form.touched.name && form.errors.name} style={{width: '40%'}} />
         <TextField
           select
           label="Quality"
@@ -140,11 +133,10 @@ function Search({buttonText, groupOptions}) {
         >
     {groupOptions}
     </TextField>
-    <EditButton className='button-30' type='submit'> Submit </EditButton>
+    <Button variant='contained' className='button-30' type='submit'> Submit </Button>
     </Box>
     <br />
     <Box component='form' onSubmit={search.handleSubmit}>
-    {/* <TextField select label='Type' name='type' style={{width: '10%'}} value={search.values.type} onChange={search.handleChange} > */}
         <TextField
           select
           label="Type"
@@ -168,7 +160,7 @@ function Search({buttonText, groupOptions}) {
       helperText={search.touched.searchterm && search.errors.searchterm}
       placeholder='Enter search term here...'
     />
-    <EditButton type='submit'> Search </EditButton>
+    <Button variant='contained' type='submit'> Search </Button>
     </Box>
     {buttonText}
     <ImageList cols={3}> {programCards} </ImageList>

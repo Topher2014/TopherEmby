@@ -1,17 +1,6 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import {useEffect, useState} from 'react'
+import {useParams} from 'react-router-dom'
 import {Button, ListItem, List, Container, Typography, Chip} from '@mui/material';
-import { styled } from '@mui/system';
-
-  const EditButton = styled(Button)({
-    margin: '16px 0',
-    fontWeight: 'bold',
-    color: 'white',
-    background: '#2e7d32',
-    '&:hover': {
-      background: '#1b5e20',
-    },
-  });
 
 function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
     const {groupId} = useParams()
@@ -74,7 +63,7 @@ function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
     function handleClick() {
         setShowFriends((toggle) => !toggle)
     }
-    const buttonText = showFriends ? <EditButton onClick={handleClick} > Add Friends to Group </EditButton> : <EditButton onClick={handleClick} > Remove Friends from Group </EditButton>
+    const buttonText = showFriends ? <Button variant='contained' onClick={handleClick} > Add Friends to Group </Button> : <Button variant='contained' onClick={handleClick} > Remove Friends from Group </Button>
     const renderUsers = showFriends ? removeUsers : addUsers
     let friendInfo
     const group = groups.filter(group => group.id === parseInt(groupId))

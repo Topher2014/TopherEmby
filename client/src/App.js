@@ -22,23 +22,22 @@ function App() {
         fetch('/dbusers').then(res => res.json()).then(data => setUsers(data))
     )
 
-    // useEffect(() => {
-    //     fetch('/dbauthorized')
-    //     .then(response => {
-    //         if(response.ok) {
-    //             response.json().then(user => setUser(user))
-    //         } else {
-    //             setUser(null)
-    //         }
-    //     })
-    // }, [])
+    useEffect(() => {
+        fetch('/dbauthorized')
+        .then(response => {
+            if(response.ok) {
+                response.json().then(user => setUser(user))
+            } else {
+                setUser(null)
+            }
+        })
+    }, [])
 
     const updateUser = (user) => setUser(user)
     if(!user) return (
     <>
         <Nav/>
-        {/* <Authentication updateUser={updateUser} /> */}
-        <Authentication updateUser={updateUser} setUser={setUser} />
+        <Authentication updateUser={updateUser} />
     </>
     )
 
@@ -49,12 +48,9 @@ function App() {
         <Header />
         <Switch>
             {/* <Route  > */}
-                {/* <Home /> */}
                 {/* <Home exact to='/' /> */}
             {/* </Route> */}
-            <Route path='authentication'>
-            {/* <Route path='/authentication'> */}
-            {/* <Route > */}
+            <Route path='/authentication'>
                 <Authentication updateUser={updateUser} />
             </Route>
             <Route path='/groups'>
