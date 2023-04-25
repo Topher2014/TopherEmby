@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import {useHistory} from 'react-router-dom'
@@ -9,21 +9,21 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-function Authentication({updateUser}) {
+function Authentication({updateUser, setUser}) {
     const [error, setError] = useState(false)
     const [signUp, setSignUp] = useState(false)
     const history = useHistory()
 
-    // useEffect(() => {
-    //     fetch('/dbauthorized')
-    //     .then(response => {
-    //         if(response.ok) {
-    //             response.json().then(user => setUser(user))
-    //         } else {
-    //             setUser(null)
-    //         }
-    //     })
-    // }, [])
+    useEffect(() => {
+        fetch('/dbauthorized')
+        .then(response => {
+            if(response.ok) {
+                response.json().then(user => setUser(user))
+            } else {
+                setUser(null)
+            }
+        })
+    }, [])
 
     const handleClick = () => setSignUp((signUp) => !signUp)
     const formSchema = yup.object().shape({

@@ -6,7 +6,7 @@ from werkzeug.exceptions import NotFound, Unauthorized
 
 @app.route('/')
 @app.route('/<int:id>')
-@app.route('/authentication')
+# @app.route('/authentication')
 @app.route('/groups')
 @app.route('/editgroups')
 @app.route('/addrequest')
