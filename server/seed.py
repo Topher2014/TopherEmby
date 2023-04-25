@@ -3,11 +3,12 @@ from models import db, User, Group, GroupUser, Request, Friendship
 
 with app.app_context():
     
+    Friendship.query.delete()
+    GroupUser.query.delete()
     User.query.delete()
     Group.query.delete()
-    GroupUser.query.delete()
     Request.query.delete()
-    Friendship.query.delete()
+    # Friendship.query.delete()
 
     users = []
     u0 = User(id=1, name='topher', email='blah@gmail.com')
@@ -21,6 +22,8 @@ with app.app_context():
     users.append(u3)
     u4 = User(id=5, name='Kyle', email='kyle@blah.com' )
     users.append(u4)
+    db.session.add_all(users)
+    db.session.commit()
 
     groups = []
     g1 = Group(id=1, user_id=1, name='group 1')
@@ -31,6 +34,8 @@ with app.app_context():
     groups.append(g3)
     g4 = Group(id=4, user_id=1, name='group 4')
     groups.append(g4)
+    db.session.add_all(groups)
+    db.session.commit()
 
     groupusers = []
     gu1 = GroupUser(id=1, user_id=1, group_id=1)
@@ -43,6 +48,7 @@ with app.app_context():
     groupusers.append(gu4)
     gu5 = GroupUser(id=5, user_id=1, group_id=4)
     groupusers.append(gu5)
+    db.session.add_all(groupusers)
 
     requests = []
     r1 = Request(id=1, user_id=1, group_id=1, type='movie', name='Annihilation', quality='1080', imdb_id=300668 )
@@ -55,6 +61,7 @@ with app.app_context():
     requests.append(r4)
     r5 = Request(id=5, user_id=2, group_id=2, type='tv', name='Succession', quality='1080', imdb_id=76331 )
     requests.append(r5)
+    db.session.add_all(requests)
 
     print('Creating shitty friendships...')
     friendships = [
@@ -71,10 +78,11 @@ with app.app_context():
         # Friendship(user_id=5, friend_id=1)
 
     ]
+    db.session.add_all(friendships)
     # db.session.add_all(users)
     # db.session.add_all(groups)
-    # db.session.add_all(groupusers)
     # db.session.add_all(requests)
+    # db.session.add_all(groupusers)
     # db.session.add_all(friendships)
 
     db.session.commit()

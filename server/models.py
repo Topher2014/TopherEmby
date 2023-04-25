@@ -29,7 +29,7 @@ class User(db.Model, SerializerMixin):
     # friendships = db.relationship('Friendship', foreign_keys='Friendship.friend_id', back_populates='user')
     # friends = db.relationship('User', secondary='friendships', primaryjoin='Friendship.user_id == User.id', secondaryjoin='Friendship.friend_id == User.id', backref='friend_of')
 
-    friendships = db.relationship('Friendship', foreign_keys='Friendship.friend_id', backref='user')
+    friendships = db.relationship('Friendship', foreign_keys='Friendship.friend_id', backref='user', cascade='all, delete, delete-orphan')
     friend_ids = association_proxy('friendships', 'user_id')
 
     @hybrid_property
@@ -65,7 +65,8 @@ class Group(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     name = db.Column(db.String)
 
-    groupuser = db.relationship('GroupUser', back_populates='groups', cascade='all, delete, delete-orphan')
+    # groupuser = db.relationship('GroupUser', back_populates='groups', cascade='all, delete, delete-orphan')
+    groupuser = db.relationship('GroupUser', back_populates='groups')
 
 class GroupUser(db.Model, SerializerMixin):
     __tablename__ = 'groupusers'

@@ -14,6 +14,17 @@ function Authentication({updateUser}) {
     const [signUp, setSignUp] = useState(false)
     const history = useHistory()
 
+    // useEffect(() => {
+    //     fetch('/dbauthorized')
+    //     .then(response => {
+    //         if(response.ok) {
+    //             response.json().then(user => setUser(user))
+    //         } else {
+    //             setUser(null)
+    //         }
+    //     })
+    // }, [])
+
     const handleClick = () => setSignUp((signUp) => !signUp)
     const formSchema = yup.object().shape({
         name: yup.string().required("Please enter a user name"),
@@ -30,7 +41,7 @@ function Authentication({updateUser}) {
         validationSchema: formSchema,
         validateOnChange:false,
         onSubmit: (values) => {
-            fetch(signUp?'/adduser':'/login',{
+            fetch(signUp?'/dbadduser':'/dblogin',{
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

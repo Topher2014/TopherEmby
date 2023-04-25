@@ -24,6 +24,7 @@ function Groups({ groups, fetchGroups, user }) {
     fetchGroups()
   // eslint-disable-next-line
   }, [])
+  console.log('groups')
 
   const [groupID, setGroupID] = useState(null)
   const [showUsers, setShowUsers] = useState(null)

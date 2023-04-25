@@ -19,7 +19,7 @@ function FriendsUsers({user, users, fetchUsers}) {
     useEffect(() => {setFilteredUsers(users)}, [users])
 
     function handleAddFriendClick(friend_id) {
-        fetch('/friendships', {
+        fetch('/dbfriendships', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ function FriendsUsers({user, users, fetchUsers}) {
     }
 
     function handleDeleteFriendClick(friend_id) {
-        fetch('/friendships', {
+        fetch('/dbfriendships', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

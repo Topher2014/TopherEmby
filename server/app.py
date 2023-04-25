@@ -6,6 +6,13 @@ from werkzeug.exceptions import NotFound, Unauthorized
 
 @app.route('/')
 @app.route('/<int:id>')
+@app.route('/authentication')
+@app.route('/groups')
+@app.route('/editgroups')
+@app.route('/addrequest')
+@app.route('/addremoveusers')
+@app.route('/addremoveusers/<int:id>')
+@app.route('/friendsusers')
 def index(id=0):
     return render_template("index.html")
 
@@ -24,7 +31,7 @@ class Users(Resource):
             200
         )
         return response
-api.add_resource(Users, '/users') 
+api.add_resource(Users, '/dbusers') 
 
 class Groups(Resource):
     def get(self):
@@ -48,7 +55,7 @@ class Groups(Resource):
             201
         )
         return response
-api.add_resource(Groups, '/groups')
+api.add_resource(Groups, '/dbgroups')
 
 class GroupByID(Resource):
     def delete(self, id):
@@ -60,7 +67,7 @@ class GroupByID(Resource):
         db.session.delete(group)
         db.session.commit()
         return make_response('deleted', 200)
-api.add_resource(GroupByID, '/group/<int:id>')
+api.add_resource(GroupByID, '/dbgroup/<int:id>')
 
 class EditGroups(Resource):
     def get(self):
@@ -70,7 +77,7 @@ class EditGroups(Resource):
              200
         )
         return response
-api.add_resource(EditGroups, '/editgroups')
+api.add_resource(EditGroups, '/dbeditgroups')
 
 class GroupUsers(Resource):
     def get(self):
@@ -103,7 +110,7 @@ class GroupUsers(Resource):
         db.session.delete(groupuser)
         db.session.commit()
         return make_response('deleted', 200)
-api.add_resource(GroupUsers, '/groupusers') 
+api.add_resource(GroupUsers, '/dbgroupusers') 
 
 class DeleteRequest(Resource):
     def delete(self):
@@ -116,7 +123,7 @@ class DeleteRequest(Resource):
         db.session.delete(bleg)
         db.session.commit()
         return make_response('deleted', 200)
-api.add_resource(DeleteRequest, '/deleterequest') 
+api.add_resource(DeleteRequest, '/dbdeleterequest') 
 
 
 class AddUser(Resource):
@@ -132,7 +139,7 @@ class AddUser(Resource):
             201
         )
         return response
-api.add_resource(AddUser, '/adduser')
+api.add_resource(AddUser, '/dbadduser')
 
 class Login(Resource):
     def post(self):
@@ -148,14 +155,14 @@ class Login(Resource):
         except Exception as e:
             print(str(e))
             abort(401, "Incorrect Username or Password")
-api.add_resource(Login, '/login')
+api.add_resource(Login, '/dblogin')
 
 class Logout(Resource):
     def delete(self):
         session['user_id'] = None
         response = make_response('', 204)
         return response
-api.add_resource(Logout, '/logout')
+api.add_resource(Logout, '/dblogout')
 
 class AuthorizedSession(Resource):
     def get(self):
@@ -168,7 +175,7 @@ class AuthorizedSession(Resource):
             return response
         except:
             abort(401, 'Unauthorized')
-api.add_resource(AuthorizedSession, '/authorized')
+api.add_resource(AuthorizedSession, '/dbauthorized')
 
 class Requests(Resource):
     def post(self):
@@ -188,7 +195,7 @@ class Requests(Resource):
             201
         )
         return response
-api.add_resource(Requests, '/addrequest')
+api.add_resource(Requests, '/dbaddrequest')
     
 
 class RequestsByID(Resource):
@@ -200,7 +207,7 @@ class RequestsByID(Resource):
             200
         )
         return response
-api.add_resource(RequestsByID, '/groups/<int:id>/requests')
+api.add_resource(RequestsByID, '/dbgroups/<int:id>/requests')
 
 class Friendships(Resource):
     def get(self):
@@ -238,7 +245,7 @@ class Friendships(Resource):
         db.session.delete(friendship_reverse)
         db.session.commit()
         return make_response('', 204)
-api.add_resource(Friendships, '/friendships')
+api.add_resource(Friendships, '/dbfriendships')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

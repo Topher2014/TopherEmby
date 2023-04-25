@@ -19,7 +19,7 @@ function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
     useEffect(() => {fetchUsers(); fetchGroups()}, [])
 
     function handleAddClick(user_id, group_id){
-        fetch(`/groupusers`, {
+        fetch(`/dbgroupusers`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
     }
 
     function handleDeleteClick(user_id, group_id){
-        fetch(`/groupusers`, {
+        fetch(`/dbgroupusers`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

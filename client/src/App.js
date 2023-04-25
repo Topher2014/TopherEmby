@@ -16,14 +16,14 @@ function App() {
     const [users, setUsers] = useState([])
 
     const fetchGroups = () => (
-        fetch('/groups').then(res => res.json()).then(data => setGroups(data))
+        fetch('/dbgroups').then(res => res.json()).then(data => setGroups(data))
     )
     const fetchUsers = () => (
-        fetch('/users').then(res => res.json()).then(data => setUsers(data))
+        fetch('/dbusers').then(res => res.json()).then(data => setUsers(data))
     )
 
     useEffect(() => {
-        fetch('/authorized')
+        fetch('/dbauthorized')
         .then(response => {
             if(response.ok) {
                 response.json().then(user => setUser(user))
@@ -47,10 +47,13 @@ function App() {
         <Nav updateUser={updateUser} />
         <Header />
         <Switch>
-            <Route exact path='/' >
-                <Home />
-            </Route>
+            {/* <Route  > */}
+                {/* <Home /> */}
+                {/* <Home exact to='/' /> */}
+            {/* </Route> */}
             <Route path='authentication'>
+            {/* <Route path='/authentication'> */}
+            {/* <Route > */}
                 <Authentication updateUser={updateUser} />
             </Route>
             <Route path='/groups'>

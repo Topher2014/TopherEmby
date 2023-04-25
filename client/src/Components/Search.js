@@ -40,7 +40,7 @@ function Search({buttonText, groupOptions}) {
       validationSchema: formSchema,
       validateOnChange: false,
       onSubmit: (values, {resetForm}) => {
-          fetch('/addrequest', {
+          fetch('/dbaddrequest', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',

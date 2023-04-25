@@ -40,7 +40,7 @@ const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
   const handleDelete = (id) => {
     setLoading(true);
     const newGroups = groups.filter((group) => group.id !== id);
-    fetch(`/group/${id}`, {
+    fetch(`/dbgroup/${id}`, {
       method: 'DELETE',
     }).then(() => {
       setLoading(false);
@@ -56,7 +56,7 @@ const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
     validateOnChange: false,
     onSubmit: (values, { resetForm }) => {
       setLoading(true);
-      fetch('/groups', {
+      fetch('/dbgroups', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
             history.push('/editgroups');
             fetchGroups();
             resetForm({ values: '' });
-            fetch('/groupusers', {
+            fetch('/dbgroupusers', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

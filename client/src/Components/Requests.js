@@ -6,14 +6,14 @@ function Requests({ groupID }) {
 
   useEffect(() => {
     if (groupID)
-      fetch(`/groups/${groupID}/requests`)
+      fetch(`/dbgroups/${groupID}/requests`)
         .then((res) => res.json())
         .then((data) => setRequests(data));
   }, [groupID]);
 
   function handleDeleteClick(id){
     console.log(id)
-      fetch(`/deleterequest`, {
+      fetch(`/dbdeleterequest`, {
           method: 'DELETE',
           headers: {
               'Content-Type': 'application/json',

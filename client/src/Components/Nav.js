@@ -6,7 +6,7 @@ import TopherEmby from '../Images/TopherEmby.png'
 function Nav({updateUser}) {
     const history = useHistory()
     const handleLogout = () => {
-        fetch('/logout', {
+        fetch('/dblogout', {
             method: 'DELETE',
         }).then(res => {
             if(res.ok) {
