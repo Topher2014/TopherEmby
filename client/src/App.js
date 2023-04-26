@@ -1,4 +1,4 @@
-// import Home from './Components/Home'
+import Home from './Components/Home'
 import Nav from './Components/Nav'
 import Authentication from './Components/Authentication'
 import { useState, useEffect } from 'react'
@@ -9,6 +9,7 @@ import AddRequest from './Components/AddRequest'
 import AddDelUsers from './Components/AddDelUsers'
 import FriendsUsers from './Components/FriendsUsers'
 import Header from './Components/Header'
+import About from './Components/About'
 
 function App() {
     const [user, setUser] = useState(null)
@@ -47,9 +48,12 @@ function App() {
         <Nav updateUser={updateUser} />
         <Header />
         <Switch>
-            {/* <Route  > */}
-                {/* <Home exact to='/' /> */}
-            {/* </Route> */}
+            <Route exact path='/' >
+                <Home />
+            </Route>
+            <Route path='/about' >
+                <About />
+            </Route>
             <Route path='/authentication'>
                 <Authentication updateUser={updateUser} />
             </Route>

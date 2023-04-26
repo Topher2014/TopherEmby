@@ -8,7 +8,8 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const [removing, setRemoving] = useState(false)
   const formSchema = yup.object().shape({
     name: yup.string().required('Enter group name'),
   });
@@ -19,24 +20,25 @@ const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
   }, []);
 
   const handleDelete = (id) => {
-    setLoading(true);
+    setRemoving(true);
     const newGroups = groups.filter((group) => group.id !== id);
     fetch(`/dbgroup/${id}`, {
       method: 'DELETE',
     }).then(() => {
-      setLoading(false);
+      setRemoving(false);
       setGroups(newGroups);
+      form.resetForm()
     });
   };
 
-  const formik = useFormik({
+  const form = useFormik({
     initialValues: {
       name: '',
     },
     validationSchema: formSchema,
-    validateOnChange: false,
+    // validateOnChange: false,
     onSubmit: (values, { resetForm }) => {
-      setLoading(true);
+      setAdding(true);
       fetch('/dbgroups', {
         method: 'POST',
         headers: {
@@ -44,11 +46,9 @@ const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
         },
         body: JSON.stringify({ ...values }),
       }).then((response) => {
-        setLoading(false);
+        setAdding(false);
         if (response.ok) {
           response.json().then((data) => {
-            history.push('/editgroups');
-            fetchGroups();
             resetForm({ values: '' });
             fetch('/dbgroupusers', {
               method: 'POST',
@@ -58,6 +58,10 @@ const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
               body: JSON.stringify({ user_id: data.user_id, group_id: data.id }),
             });
           });
+            fetchGroups();
+            console.log(groups)
+            history.push('/editgroups');
+            if(groups.length === 0) window.location.reload(true)
         }
       });
     },
@@ -68,62 +72,67 @@ const EditGroups = ({ groups, fetchGroups, setGroups, user }) => {
     .flat()
     .filter((filteredGroups) => filteredGroups.user_id === user.id)
     .map((group) => (
-      <Container key={group.groups.id}>
-        <List className='groupcard'>
+      <Box key={group.groups.id} >
           <Chip
             label={group.groups.name}
             color='primary'
+            disabled={removing}
             onDelete={() => handleDelete(group.groups.id)}
             deleteIcon={<DeleteIcon />}
           />
           <Button
             variant='outlined'
+            disabled={removing}
             size='small'
             startIcon={<PersonAddIcon />}
             onClick={() => history.push(`/addremoveusers/${group.groups.id}`)}
           >
             Add/Remove Users
           </Button>
-        </List>
-      </Container>
-    ));
+      </Box>
+    ))
+  
 
   return (
     <Container sx={{ marginTop: 10 }}>
       <Typography> Edit Groups </Typography>
       <Box sx={{ my: 2 }}>
-        <Typography color='error' gutterBottom>
-          {formik.errors.name}
-        </Typography>
-        <form onSubmit={formik.handleSubmit}>
+        <Box component='form' onSubmit={form.handleSubmit}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <TextField
               label='Name'
               name='name'
               size='small'
               variant='outlined'
-              value={formik.values.name}
-              onChange={formik.handleChange}
+              value={form.values.name}
+              onChange={form.handleChange}
+              error={form.touched.name && Boolean(form.errors.name)}
+              helperText={form.touched.name && form.errors.name}
             />
             <Box sx={{ ml: 1 }}>
               <Button
                 type='submit'
                 variant='contained'
-                disabled={loading}
+                disabled={adding}
                 size='large'
               >
                 Add Group
               </Button>
             </Box>
           </Box>
-       
-          {loading && (
+          {removing && (
+        <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+          <CircularProgress size={20} />
+          <Box sx={{ ml: 1 }}>Removing Group...</Box>
+        </Box>
+      )}
+          {adding && (
         <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
           <CircularProgress size={20} />
           <Box sx={{ ml: 1 }}>Adding Group...</Box>
         </Box>
       )}
-    </form>
+    </Box>
   </Box>
   <Divider sx={{ mb: 2 }} />
   <Typography>Your Groups:</Typography>

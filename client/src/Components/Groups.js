@@ -9,10 +9,9 @@ function Groups({ groups, fetchGroups, user }) {
     fetchGroups()
   // eslint-disable-next-line
   }, [])
-  console.log('groups')
 
-  const [groupID, setGroupID] = useState(null)
-  const [showUsers, setShowUsers] = useState(null)
+  const [groupID, setGroupID] = useState('')
+  const [showUsers, setShowUsers] = useState('')
   const [initial, setInitial] = useState(true)
   const [label, setLabel] = useState('Select a group...')
   const history = useHistory()
@@ -44,7 +43,13 @@ function Groups({ groups, fetchGroups, user }) {
 
   const initialRenderInfo = !initial ? renderInfo : null
 
-  const renderGroups = groups
+  let renderGroups
+  // if (groups.length === 0) {
+  //   renderGroups = <MenuItem disabled > You're not associated with any groups yet! </MenuItem>
+  // }
+  if (groups.length === 0) renderGroups = <MenuItem disabled > You're not associated with any groups yet! </MenuItem>
+  else {
+  renderGroups = groups
     .map((mappedGroups) => mappedGroups.groupuser)
     .flat()
     .filter((filteredGroups) => filteredGroups.user_id === user.id)
@@ -62,6 +67,7 @@ function Groups({ groups, fetchGroups, user }) {
         </MenuItem>
       )
     })
+  }
 
   return (
     <Container sx={{marginTop: 10}} >
@@ -69,8 +75,10 @@ function Groups({ groups, fetchGroups, user }) {
       <Button variant='contained' onClick={() => history.push('/editgroups')}>
         Edit Groups
       </Button>
-      <TextField label={label} select name="group_id" fullWidth>
+      <TextField label={label} select fullWidth>
         {renderGroups}
+        {/* No groups */}
+        {/* <MenuItem> Test </MenuItem> */}
       </TextField>
       {initalButtonText}
       {initialRenderInfo}

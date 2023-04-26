@@ -63,15 +63,15 @@ function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
     function handleClick() {
         setShowFriends((toggle) => !toggle)
     }
-    const buttonText = showFriends ? <Button variant='contained' onClick={handleClick} > Add Friends to Group </Button> : <Button variant='contained' onClick={handleClick} > Remove Friends from Group </Button>
-    const renderUsers = showFriends ? removeUsers : addUsers
+    const buttonText = showFriends ? <Button onClick={handleClick} > Remove Friends from Group </Button>: <Button onClick={handleClick} > Add Friends to Group </Button> 
+    const renderUsers = showFriends ? addUsers : removeUsers 
     let friendInfo
     const group = groups.filter(group => group.id === parseInt(groupId))
     if(groups.length === 0){
         return null
     }
     else{
-     friendInfo = showFriends ? <Typography fontSize={24}> These are your friends currently in {group[0].name}. Click to remove. </Typography> : <Typography fontSize={24}> These are friends who can be added to {group[0].name}. Click to add.  </Typography>
+     friendInfo = showFriends ? <Typography fontSize={24}> These are friends who can be added to {group[0].name}. Click to add.  </Typography> : <Typography fontSize={24}> These are your friends currently in {group[0].name}. Click to remove. </Typography>
     }
     return (
         <Container sx={{marginTop: 10}}>
