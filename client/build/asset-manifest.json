@@ -1,11 +1,13 @@
 {
   "files": {
-    "main.js": "/static/js/main.a2032204.js",
-    "static/media/TopherEmby.png": "/static/media/TopherEmby.d53e07aa9abdd5adf0a4.png",
+    "main.js": "/static/js/main.7c0e2987.js",
+    "static/media/TopherEmbyBanner.png": "/static/media/TopherEmbyBanner.3a660d438e75d2a255b8.png",
+    "static/media/Pete.jpg": "/static/media/Pete.fa6d3b8462663254d8aa.jpg",
+    "static/media/TopherEmby.png": "/static/media/TopherEmby.789035072e2d5d2ea448.png",
     "index.html": "/index.html",
-    "main.a2032204.js.map": "/static/js/main.a2032204.js.map"
+    "main.7c0e2987.js.map": "/static/js/main.7c0e2987.js.map"
   },
   "entrypoints": [
-    "static/js/main.a2032204.js"
+    "static/js/main.7c0e2987.js"
   ]
 }
