@@ -71,7 +71,7 @@ function AddDelUsers({users, fetchUsers, user, groups, fetchGroups}) {
         return null
     }
     else{
-     friendInfo = showFriends ? <Typography fontSize={24}> These are friends who can be added to {group[0].name}. Click to add.  </Typography> : <Typography fontSize={24}> These are your friends currently in {group[0].name}. Click to remove. </Typography>
+     friendInfo = showFriends ? <Typography fontSize={24} > These are friends who can be added to {group[0].name}. Click to add.  </Typography> : <Typography component='p' variant='secondary' > These are your friends currently in {group[0].name}. Click to remove. </Typography>
     }
     return (
         <Container sx={{marginTop: 10}}>

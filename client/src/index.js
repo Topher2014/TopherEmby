@@ -1,9 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
 // import './index.css';
-import App from './App';
 // import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
 // import Avatar from '@mui/material/Avatar';
 // import Button from '@mui/material/Button';
 // import CssBaseline from '@mui/material/CssBaseline';
@@ -16,6 +12,10 @@ import { BrowserRouter } from 'react-router-dom';
 // import Typography from '@mui/material/Typography';
 // import Container from '@mui/material/Container';
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
@@ -29,13 +29,6 @@ const theme = createTheme({
       main: '#ff3d00',
     },
   },
-  // typography: {
-  //   fontSize: 14,
-  //   fontWeightLight: 300,
-  //   fontWeightRegular: 400,
-  //   fontWeightMedium: 500,
-  //   fontWeightBold: 700,
-  // },
   components: {
     MuiTypography: {
       styleOverrides: {
@@ -43,8 +36,18 @@ const theme = createTheme({
           fontSize: 38,
           fontWeight: 'bold',
           marginBottom: 16,
+          display: 'flex',
+          fontFamily: 'Arial'
         },
       },
+      variants:[
+        {
+          props: {variant: 'secondary'},
+          style: {
+            fontSize: 24,
+          }
+        }
+      ] 
     },
     MuiButton: {
       styleOverrides: {

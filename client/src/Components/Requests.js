@@ -39,7 +39,7 @@ function Requests({ groupID }) {
 
   return (
     <Container>
-      <Typography fontSize={24}>
+      <Typography fontSize={30} >
         Requests
       </Typography>
       {requests.length > 0 ? (
@@ -48,7 +48,7 @@ function Requests({ groupID }) {
         </List>
       ) : (
         <Box sx={{ mt: 2 }}>
-          <Typography>No requests found.</Typography>
+          <Typography component='p' variant='secondary' >No requests found for this group.</Typography>
         </Box>
       )}
     </Container>

@@ -1,4 +1,4 @@
-import {List, Container, Typography, Chip} from '@mui/material';
+import {List, Container, Typography, Chip, Box} from '@mui/material';
 
 function GroupUsers({ users, user }) {
   console.log(users);
@@ -17,10 +17,18 @@ function GroupUsers({ users, user }) {
 
   return (
     <Container>
-      <Typography fontSize={24}>
-        Users
+      <Typography fontSize={30} >
+        Friends
       </Typography>
-      {renderUsers}
+      {users.length > 1 ? (
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+          {renderUsers}
+        </List>
+      ) : (
+        <Box sx={{ mt: 2 }}>
+          <Typography component='p' variant='secondary' >No friends appear to be associated with this group.</Typography>
+        </Box>
+      )}
     </Container>
   );
 }

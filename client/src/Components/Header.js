@@ -4,14 +4,13 @@ import TopherEmby from '../Images/TopherEmbyBanner.png'
 
 const useStyles = makeStyles({
     header: {
-    //   position: 'relative',
-    //   display: 'flex',
+      position: 'relative',
+      display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'column',
       padding: '15px 20px 18px 18px',
       borderRadius: '5px',
-      // backgroundImage: 'url("../Images/TopherEmby.png")',
       backgroundImage: `url(${TopherEmby})`,
       backgroundRepeat: 'no-repeat',
       backgroundPosition: ' center',

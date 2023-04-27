@@ -9,7 +9,6 @@ function AddRequest({groups, fetchGroups, user}) {
     useEffect(() => {fetchGroups()}, [])
     const groupOptions = groups.map(mappedGroups => mappedGroups.groupuser).flat().filter(filteredGroups => filteredGroups.user_id === user.id).map(group => {
         return (
-            // <option value={group.groups.id} key={group.groups.id} > {group.groups.name} </option>
             <MenuItem value={group.groups.id} key={group.groups.id} > {group.groups.name} </MenuItem>
         )
     })
