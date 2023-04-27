@@ -1,8 +1,6 @@
 import {List, Container, Typography, Chip, Box} from '@mui/material';
 
 function GroupUsers({ users, user }) {
-  console.log(users);
-
   const renderUsers = users.map((thisUser) => {
     if (user.id === thisUser.id) {
       return null;
