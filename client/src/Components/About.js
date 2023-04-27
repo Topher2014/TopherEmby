@@ -1,4 +1,4 @@
-import {Container, Typography, List, ListItem} from "@mui/material"
+import {Container, Typography} from "@mui/material"
 import Pete from '../Images/Pete.jpg'
 
 function About(){
@@ -14,6 +14,7 @@ function About(){
         <img src={Pete} alt='Pete Campbell' style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '50%' }} />
         <br/><br/><br/><br/>
         <Typography> Upcoming Features </Typography>
+        <Typography component='p' variant='secondary' >- A bit of mobile optimization.  </Typography>
         <Typography component='p' variant='secondary' >- Request history. In addition to requests being able to be deleted, they
         will be able to be removed and marked as downloaded. Requests that are deleted will allow an explanation why. </Typography>
         <Typography component='p' variant='secondary' >- Admin privileges for group creators. That part is actually pretty easy and mostly done, 
