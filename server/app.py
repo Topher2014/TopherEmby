@@ -6,7 +6,8 @@ from werkzeug.exceptions import NotFound, Unauthorized
 
 @app.route('/')
 @app.route('/<int:id>')
-# @app.route('/authentication')
+@app.route('/authentication')
+@app.route('/about')
 @app.route('/groups')
 @app.route('/editgroups')
 @app.route('/addrequest')
@@ -15,11 +16,6 @@ from werkzeug.exceptions import NotFound, Unauthorized
 @app.route('/friendsusers')
 def index(id=0):
     return render_template("index.html")
-
-
-# @app.route('/')
-# def index():
-#     return '<h1>ToooopppherEEEEmmmmbbbyyy</h1>'
 
 api = Api(app)
 
@@ -35,7 +31,6 @@ api.add_resource(Users, '/dbusers')
 
 class Groups(Resource):
     def get(self):
-        # groups_list = [g.to_dict() for g in Group.query.filter_by(user_id=session['user_id'])]
         groups_list = [g.to_dict() for g in Group.query.all()]
         response = make_response(
             groups_list,
