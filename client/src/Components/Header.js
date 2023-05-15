@@ -22,16 +22,10 @@ const useStyles = makeStyles({
     },
   });
 
-function Header() {
+function Header({theme}) {
     const classes = useStyles();
   return (
-  <div className={classes.header} style={{ backgroundImage: `url(${TopherEmby})` }}>
-  <div className="hero-overlay bg-opacity-60"></div>
-  <div className="hero-content text-center text-neutral-content">
-    <div className="max-w-md">
-    </div>
-  </div>
-</div>
+  <div className={classes.header} style={{ backgroundImage: `url(${TopherEmby})` }}/>
   );
 }
 
