@@ -1,5 +1,5 @@
 import {useHistory} from 'react-router-dom'
-import {AppBar, Toolbar, Button, Box, Stack} from '@mui/material'
+import {AppBar, Toolbar, Button, Box} from '@mui/material'
 import TopherEmby from '../Images/TopherEmby.png'
 
 function Nav({updateUser}) {
